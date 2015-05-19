@@ -15,7 +15,7 @@ app.controller("userController", function ($scope, $location, $route,
                 ClearData();
                 $location.path('/user/home');
             }).error(function (serverError) {
-                notifyService.showError('Fail to login',serverError)
+                notifyService.showError('',serverError)
             });
     };
 

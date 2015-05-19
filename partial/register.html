@@ -1,5 +1,5 @@
 <div class="row">
-    <form class="register form-horizontal col-lg-12" ng-submit="register()">
+    <form class="register form-horizontal col-lg-12" name="registerForm" ng-submit="register()">
         <fieldset>
             <legend><h2>Create a new account</h2></legend>
             <div class="col-lg-9 form-info">
@@ -13,15 +13,20 @@
                 <div class="form-group">
                     <label for="reg-password" class="col-lg-3 control-label">Password:</label>
                     <div class="col-lg-9">
-                        <input type="password" class="form-control" id="reg-password" ng-model="registerData.password" placeholder="Password"
+                        <input type="password" class="form-control" id="reg-password" name="password" ng-model="registerData.password" placeholder="Password"
                                required ng-minlength="6" ng-maxlength="100" oninvalid="this.setCustomValidity('Password is required')" oninput="setCustomValidity('')">
+                        <div ng-show="registerForm.password.$error.minlength">Please enter a min length of 6</div>
+                        <div ng-show="registerForm.password.$error.maxlength">Please enter a max length of 100</div>
                     </div>
+
+
                 </div>
                 <div class="form-group">
                     <label for="confirm-password" class="col-lg-3 control-label">Confirm Password:</label>
                     <div class="col-lg-9">
-                        <input type="password" class="form-control" id="confirm-password" ng-model="registerData.confirmPassword" placeholder="Confirm Password" required
-                               oninvalid="this.setCustomValidity('Confirm password is required')" oninput="setCustomValidity('')">
+                        <input type="password" class="form-control" id="confirm-password" name="confirmPassword" ng-model="registerData.confirmPassword" placeholder="Confirm Password" required
+                               oninvalid="this.setCustomValidity('Confirm password is required')" oninput="setCustomValidity('')" equals="{{registerData.password}}">
+                        <div ng-show="registerForm.confirmPassword.$error.equals">Password not matching</div>
                     </div>
                 </div>
                 <div class="form-group">
@@ -43,13 +48,13 @@
                     <div class="col-lg-9">
                         <div class="radio">
                             <label>
-                                <input type="radio" name="gender-radio" ng-model="registerDate.gender" value="male">Male
+                                <input type="radio" name="gender-radio" ng-model="registerDate.gender" value="1">Male
                             </label>
                             <label>
-                                <input type="radio" name="gender-radio" ng-model="registerDate.gender" value="female">Female
+                                <input type="radio" name="gender-radio" ng-model="registerDate.gender" value="2">Female
                             </label>
                             <label>
-                                <input type="radio" name="gender-radio" ng-model="registerDate.gender" value="other">Other
+                                <input type="radio" name="gender-radio" ng-model="registerDate.gender" value="0">Other
                             </label>
                         </div>
                     </div>
