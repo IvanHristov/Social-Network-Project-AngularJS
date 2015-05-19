@@ -1,0 +1,68 @@
+<div class="row">
+    <form class="register form-horizontal col-lg-12" ng-submit="register()">
+        <fieldset>
+            <legend><h2>Create a new account</h2></legend>
+            <div class="col-lg-9 form-info">
+                <div class="form-group">
+                    <label for="reg-username" class="col-lg-3 control-label">Username:</label>
+                    <div class="col-lg-9">
+                        <input type="text" class="form-control" id="reg-username" ng-model="registerData.username" placeholder="Username" required
+                               oninvalid="this.setCustomValidity('Username is required')" oninput="setCustomValidity('')">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="reg-password" class="col-lg-3 control-label">Password:</label>
+                    <div class="col-lg-9">
+                        <input type="password" class="form-control" id="reg-password" ng-model="registerData.password" placeholder="Password"
+                               required ng-minlength="6" ng-maxlength="100" oninvalid="this.setCustomValidity('Password is required')" oninput="setCustomValidity('')">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="confirm-password" class="col-lg-3 control-label">Confirm Password:</label>
+                    <div class="col-lg-9">
+                        <input type="password" class="form-control" id="confirm-password" ng-model="registerData.confirmPassword" placeholder="Confirm Password" required
+                               oninvalid="this.setCustomValidity('Confirm password is required')" oninput="setCustomValidity('')">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="reg-name" class="col-lg-3 control-label">Name:</label>
+                    <div class="col-lg-9">
+                        <input type="text" class="form-control" id="reg-name" ng-model="registerData.name" placeholder="Name" required
+                               oninvalid="this.setCustomValidity('Name is required')" oninput="setCustomValidity('')">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="reg-email" class="col-lg-3 control-label">Email:</label>
+                    <div class="col-lg-9">
+                        <input type="email" class="form-control" id="reg-email" ng-model="registerData.email" placeholder="Email" required
+                               oninvalid="this.setCustomValidity('Email is required')" oninput="setCustomValidity('')">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-lg-3 control-label">Gender:</label>
+                    <div class="col-lg-9">
+                        <div class="radio">
+                            <label>
+                                <input type="radio" name="gender-radio" ng-model="registerDate.gender" value="male">Male
+                            </label>
+                            <label>
+                                <input type="radio" name="gender-radio" ng-model="registerDate.gender" value="female">Female
+                            </label>
+                            <label>
+                                <input type="radio" name="gender-radio" ng-model="registerDate.gender" value="other">Other
+                            </label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-group col-lg-12">
+                <div class="col-lg-10 col-lg-offset-2">
+                    <button id="reg-btn" type="submit" class="btn btn-lg btn-primary" >Register</button>
+                    <span>or</span>
+                    <a href="#/login">Login</a>
+                </div>
+            </div>
+        </fieldset>
+    </form>
+</div>
