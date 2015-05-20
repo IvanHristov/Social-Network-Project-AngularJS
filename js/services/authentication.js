@@ -34,8 +34,25 @@ app.factory('authentication', function adsData($http, BASE_URL_SERVICE) {
         };
     };
 
-    service.isLoggedIn = function () {
-        return localStorage['accessToken'];
+    service.isLogged = function(logged){
+        if(!localStorage.username){
+            logged(false);
+            return;
+        }
+
+        $http.get(BASE_URL_SERVICE + 'me',{
+            headers: service.getHeaders()
+        })
+            .success(function(serverData){
+                if(serverData.username == localStorage.username){
+                    logged(true);
+                }else{
+                    logged(false);
+                }
+            })
+            .error(function(){
+                logged(false);
+            });
     };
 
     return service;

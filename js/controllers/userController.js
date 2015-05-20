@@ -13,7 +13,7 @@ app.controller("userController", function ($scope, $location, $route,
                 notifyService.showInfo("Successful Login!");
                 authentication.setCredentials(serverData);
                 ClearData();
-                $location.path('/user/home');
+                $location.path('/home')
             }).error(function (serverError) {
                 notifyService.showError('',serverError)
             });
@@ -25,7 +25,7 @@ app.controller("userController", function ($scope, $location, $route,
                 notifyService.showInfo("Successful Register!");
                 authentication.setCredentials(serverData);
                 ClearData();
-                $location.path('/user/home');
+                $location.path('/home')
             }).error(function (serverError) {
                 notifyService.showError('',serverError)
             });
@@ -50,4 +50,35 @@ app.controller("userController", function ($scope, $location, $route,
         mainData.clearParams();
         $route.reload();
     };
+    //
+    //$scope.showLogin = function() {
+    //    $("#login-form").delay(100).fadeIn(100);
+    //    $("#register-form").fadeOut(100);
+    //    $('#register-form-link').removeClass('active');
+    //    $('#login-form-link').addClass('active');
+    //    //e.preventDefault();
+    //};
+    //
+    //$scope.showRegister = function(){
+    //    $("#register-form").delay(100).fadeIn(100);
+    //    $("#login-form").fadeOut(100);
+    //    $('#login-form-link').removeClass('active');
+    //    $('#register-form-link').addClass('active');
+    //    e.preventDefault();
+    //};
+
+    $('#login-form-link').click(function(e) {
+        $("#login-form").delay(100).fadeIn(100);
+        $("#register-form").fadeOut(100);
+        $('#register-form-link').removeClass('active');
+        $(this).addClass('active');
+        e.preventDefault();
+    });
+    $('#register-form-link').click(function(e) {
+        $("#register-form").delay(100).fadeIn(100);
+        $("#login-form").fadeOut(100);
+        $('#login-form-link').removeClass('active');
+        $(this).addClass('active');
+        e.preventDefault();
+    });
 });
