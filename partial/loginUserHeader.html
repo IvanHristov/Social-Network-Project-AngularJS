@@ -1,11 +1,18 @@
-<nav class="navbar navbar-default" role="navigation">
-    <div id="navBar">
+<nav class="navbar navbar-default navbar-fixed-top">
+    <div class="container">
         <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar"
+                    aria-expanded="false" aria-controls="navbar">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
             <a class="navbar-brand" href="#">SocialNetwork</a>
         </div>
-        <div class="col-sm-6">
-            <form class="navbar-form" role="search">
-                <div class="input-group">
+        <div id="navbar" class="navbar-collapse collapse headerSearche">
+            <form class="navbar-form navbar-left searchField" role="search">
+                <div class="input-group searchBar">
                     <input type="text" class="form-control" placeholder="Search" name="q">
 
                     <div class="input-group-btn">
@@ -13,9 +20,7 @@
                     </div>
                 </div>
             </form>
-        </div>
-        <div class="collapse navbar-collapse col-sm-3 col-md-4" id="bs-example-navbar-collapse-1">
-            <ul class="nav navbar-nav">
+            <ul class="nav navbar-nav navbar-right">
 
                 <li><a href="#/userProfile"> <img class="headerAvatarPhoto"
                                                   ng-src="{{userInfo.profileImageData || defaultUserAvatar}}"
@@ -59,5 +64,6 @@
                 <li ng-click="logout()"><a href="#/"><i class="fa fa-sign-out fa-lg"></i></a></li>
             </ul>
         </div>
+        <!--/.nav-collapse -->
     </div>
 </nav>

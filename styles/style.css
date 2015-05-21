@@ -121,6 +121,13 @@
     width: 21px;
     height: 18px;
 }
+
+.searchField{
+    width: 55%;
+}
+.searchBar{
+    width: 112%;
+}
 .friendRequestsCount{
     background: #e86464;
     position: absolute;
@@ -149,7 +156,9 @@
 }
 /*postStyle*/
 
-
+.body{
+    margin-top: 60px;
+}
 .panel-shadow {
     box-shadow: rgba(0, 0, 0, 0.3) 7px 7px 7px;
 }
@@ -310,4 +319,19 @@
 }
 .friends{
     display: inline-block;
+}
+@media screen and (max-width: 1200px) {
+    .friendListZone {
+        float: none;
+        margin-left: 15px;
+        margin-bottom: 5px;
+    }
+    .searchField{
+        width: 47%;
+    }
+}
+@media screen and (max-width: 992px) {
+    .searchField {
+        width: 33%;
+    }
 }
