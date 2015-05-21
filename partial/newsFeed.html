@@ -1,6 +1,91 @@
-<div ng-repeat="post in loadData">
-    <h1>{{post.author.name}}</h1>
-    <span>{{post.date | date : 'd MMM yyyy HH:mm:ss'}}</span>
-    <div>{{post.postContent}}</div>
+<link rel="stylesheet" type="text/css" href="//netdna.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css">
+<div ng-controller="mainController">
+    <div ng-include="'partial/loginUserHeader.html'"></div>
+
+    <div class="container">
+        <div class="list-content friendListZone">
+            <ul class="list-group">
+                <li href="#" class="list-group-item title">
+                    Friends <a class="totalFriendCount" href="#/friends">{{friendCount}} total</a>
+                </li>
+                <li ng-repeat="friend in friendInfo" href="#" class="friends">
+                    <a href="#">
+                        <img class="img"
+                             ng-src="{{friend.profileImageData || defaultUserAvatar}}"
+                             alt="{{friend.name}}`s photo">
+                    </a>
+                </li>
+                <li href="#" class="friends">
+                    <img class="img" src="http://bootdey.com/img/Content/User_for_snippets.png">
+                </li>
+                <li href="#" class="friends">
+                    <img class="img"  src="http://bootdey.com/img/Content/user_1.jpg">
+
+                </li>
+                <li href="#" class="friends">
+                    <img class="img"  src="http://bootdey.com/img/Content/user_1.jpg">
+
+                </li>
+
+            </ul>
+        </div>
+        <div class="col-sm-8" ng-repeat="post in loadData">
+            <div class="panel panel-white post panel-shadow">
+                <div class="post-heading">
+                    <div class="pull-left image">
+                        <img class="img-circle avatar"
+                             ng-src="{{post.profileImageData || defaultUserAvatar}}"
+                             alt="{{post.name}}`s photo">
+                    </div>
+                    <div class="pull-left meta">
+                        <div class="title h5">
+                            <a href="#"><b>{{post.author.name}}</b></a>
+                            made a post.
+                        </div>
+                        <!--rewrite from php -->
+                        <h6 class="text-muted time">{{post.date | date : 'd MMM yyyy HH:mm:ss'}}</h6>
+                    </div>
+                </div>
+                <div class="post-description">
+                    <p>{{post.postContent}}</p>
+
+                    <div class="stats">
+                        <a href="#" class="btn btn-default stat-item">
+                            <i class="fa fa-thumbs-up icon"></i><span>{{post.likesCount}} Likes </span>
+                        </a>
+                        <a href="#" class="btn btn-default stat-item">
+                            <i class="fa fa-comments"></i> <span>{{post.comments.length}} Comments </span>
+                        </a>
+                    </div>
+                </div>
+                <div class="post-footer">
+                    <div class="input-group">
+                        <input class="form-control" placeholder="Add a comment" type="text">
+                    <span class="input-group-addon">
+                        <a href="#"><i class="fa fa-edit"></i></a>
+                    </span>
+                    </div>
+                    <ul class="comments-list" ng-if="post.comments.length !== 0">
+                        <li class="comment">
+                            <a class="pull-left" href="#">
+                                <img class="avatar" src="http://bootdey.com/img/Content/user_1.jpg" alt="avatar">
+                            </a>
+
+                            <div class="comment-body">
+                                <div class="comment-heading">
+                                    <h4 class="user">Gavino Free</h4>
+                                    <h5 class="time">5 minutes ago</h5>
+                                </div>
+                                <span>Sure, oooooooooooooooohhhhhhhhhhhhhhhh</span>
+                                <span style="float: right"><a href="#" class="btn btn-xs btn-default"><i
+                                        class="fa fa-thumbs-up icon"></i> 2 Likes</a> <a href="#"
+                                                                                         class="btn btn-xs btn-default"><i
+                                        class="fa fa-comments"></i> 6 Comments</a></span>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
-<div>dadsa</div>

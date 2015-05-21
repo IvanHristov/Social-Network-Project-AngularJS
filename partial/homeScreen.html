@@ -1,7 +1,7 @@
-<div class="container" ng-if="!isLoggedIn">
-    <div ng-include="'partial/loginRegister.html'"></div>
-</div>
-
 <div ng-if="isLoggedIn">
     <div ng-include="'partial/newsFeed.html'"></div>
+</div>
+
+<div class="container" ng-if="!isLoggedIn">
+    <div ng-include="'partial/loginRegister.html'"></div>
 </div>

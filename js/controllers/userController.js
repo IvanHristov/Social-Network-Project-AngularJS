@@ -3,11 +3,12 @@ app.controller("userController", function ($scope, $location, $route,
     var ClearData = function () {
         $scope.loginData = "";
         $scope.registerData = "";
-        $scope.userData = "";
-        $scope.passwordData = "";
+        //$scope.userData = "";
+        //$scope.passwordData = "";
     };
 
     $scope.login = function () {
+        console.log('dibel' + $scope.loginData)
         authentication.login($scope.loginData)
             .success(function (serverData) {
                 notifyService.showInfo("Successful Login!");
@@ -30,6 +31,11 @@ app.controller("userController", function ($scope, $location, $route,
                 notifyService.showError('',serverError)
             });
     };
+
+    authentication.isLogged(function (isLogged) {
+        $scope.isLoggedIn = isLogged;
+    });
+
     //
     //$scope.changePassword = function () {
     //    authentication.ChangePassword($scope.passwordData,
@@ -46,8 +52,7 @@ app.controller("userController", function ($scope, $location, $route,
     $scope.logout = function () {
         notifyService.showInfo("Successful Logout!");
         ClearData();
-        authentication.ClearCredentials();
-        mainData.clearParams();
+        authentication.clearCredentials();
         $route.reload();
     };
     //

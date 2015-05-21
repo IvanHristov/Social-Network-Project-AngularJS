@@ -15,6 +15,7 @@ app.factory('mainData', function adsData($http, authentication, BASE_URL_SERVICE
             })
     };
 
+
     data.getYourFriends = function () {
         return $http.get(BASE_URL_SERVICE + 'me/friends',
             {
@@ -24,6 +25,13 @@ app.factory('mainData', function adsData($http, authentication, BASE_URL_SERVICE
 
     data.getYourFriendFeed = function (username, StartPostId, PageSize) {
         return $http.get(BASE_URL_SERVICE + 'users/' + username + '/wall?&PageSize=' + PageSize,
+            {
+                headers: authentication.getHeaders()
+            });
+    };
+
+    data.getFriendRequests = function(){
+        return $http.get(BASE_URL_SERVICE + 'me/requests',
             {
                 headers: authentication.getHeaders()
             });

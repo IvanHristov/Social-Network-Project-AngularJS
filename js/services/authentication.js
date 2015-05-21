@@ -15,6 +15,13 @@ app.factory('authentication', function adsData($http, BASE_URL_SERVICE) {
         return $http.post(serviceUrl + 'Logout', null);
     };
 
+    service.getUserInfo = function () {
+        return $http.get(BASE_URL_SERVICE + 'me',
+            {
+                headers: service.getHeaders()
+            });
+    };
+
     service.setCredentials = function (serverData) {
         localStorage['accessToken'] = serverData.access_token;
         localStorage['username'] = serverData.userName;
