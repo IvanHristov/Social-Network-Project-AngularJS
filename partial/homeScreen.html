@@ -1,7 +1,7 @@
-<div ng-if="isLoggedIn">
+<div ng-if="isLoggedIn === true">
     <div ng-include="'partial/newsFeed.html'"></div>
 </div>
-
-<div class="container" ng-if="!isLoggedIn">
+<div class="loading "ng-if="isLoggedIn === undefined"><img src="img/ajax-loader (1).gif" alt=""/></div>
+<div class="container" ng-if="isLoggedIn === false">
     <div ng-include="'partial/loginRegister.html'"></div>
 </div>

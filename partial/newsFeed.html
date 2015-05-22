@@ -1,4 +1,3 @@
-
 <div ng-controller="mainController">
     <div ng-include="'partial/loginUserHeader.html'"></div>
 
@@ -6,9 +5,10 @@
         <div class="list-content friendListZone">
             <ul class="list-group">
                 <li href="#" class="list-group-item title">
-                    Friends <a class="totalFriendCount" href="#/friends">{{friendCount}} total</a>
+                    Friends <a class="totalFriendCount" href="#/user/{{userInfo.username}}/myFriends">{{friendTotal.totalCount}}
+                    total</a>
                 </li>
-                <li ng-repeat="friend in friendInfo" href="#" class="friends">
+                <li ng-repeat="friend in friendTotal.friends" href="#" class="friends">
                     <a href="#/user/{{friend.username}}">
                         <img class="img"
                              ng-src="{{friend.profileImageData || defaultUserAvatar}}"
@@ -38,37 +38,46 @@
                     <p>{{post.postContent}}</p>
 
                     <div class="stats">
-                        <a href="#" class="btn btn-default stat-item">
-                            <i class="fa fa-thumbs-up icon"></i><span>{{post.likesCount}} Likes </span>
-                        </a>
-                        <a href="#/" class="btn btn-default stat-item">
-                            <i class="fa fa-comments"></i> <span>{{post.comments.length}} Comments </span>
-                        </a>
+                        <span href="#" class="btn btn-default stat-item" ng-click="likePost(post)">
+                            <i ng-show="!post.liked" class="fa fa-thumbs-up icon"></i><i ng-show="post.liked" class="fa fa-thumbs-down icon"></i><span>{{post.likesCount}} <span
+                                ng-show="post.likesCount != 1">Likes</span><span
+                                ng-show="post.likesCount == 1">Like</span> </span>
+                        </span>
+                        <span href="#/" class="btn btn-default stat-item" ng-click="post.isCommentShow = !post.isCommentShow">
+                            <i class="fa fa-comments"></i> <span>{{post.comments.length}} <span
+                                ng-show="post.comments.length != 1">Comments</span><span
+                                ng-show="post.comments.length == 1">Comment</span> </span>
+                        </span>
                     </div>
                 </div>
-                <div class="post-footer">
-                    <div class="input-group">
-                        <input class="form-control" placeholder="Add a comment" type="text">
-                    <span class="input-group-addon">
-                        <a href="#"><i class="fa fa-edit"></i></a>
-                    </span>
-                    </div>
-                    <ul class="comments-list" ng-if="post.comments.length !== 0">
-                        <li class="comment">
-                            <a class="pull-left" href="#">
-                                <img class="avatar" src="http://bootdey.com/img/Content/user_1.jpg" alt="avatar">
+                <div class="post-footer" ng-if="post.isCommentShow">
+                    <form class="input-group commentField" ng-submit="submitComment(post)">
+                        <input class="form-control commentInputField" ng-model="post.unsubmitCommentContent"
+                               placeholder="Add a comment" type="text" style="width: 84.9%">
+                        <button type="submit" class="btn btn-success green commentSubmitBtn"><i class="fa fa-edit"></i>
+                            Comment
+                        </button>
+                    </form>
+                    <ul class="comments-list" ng-show="post.comments.length !== 0">
+                        <li class="comment" ng-repeat="comment in post.comments">
+                            <a class="pull-left" href="#/user/{{comment.author.username}}">
+                                <img class="avatar" ng-src="{{comment.author.profileImageData || defaultUserAvatar}}"
+                                     alt="{{comment.author.name}}`s photo">
                             </a>
 
                             <div class="comment-body">
                                 <div class="comment-heading">
-                                    <h4 class="user">Gavino Free</h4>
-                                    <h5 class="time">5 minutes ago</h5>
+                                    <h4 class="user"><a href="#/user/{{comment.author.username}}">{{comment.author.name}}</a>
+                                    </h4>
+                                    <h5 class="time">{{comment.date | date : 'd MMM yyyy HH:mm:ss'}}</h5>
                                 </div>
-                                <span>Sure, oooooooooooooooohhhhhhhhhhhhhhhh</span>
-                                <span style="float: right"><a href="#" class="btn btn-xs btn-default"><i
-                                        class="fa fa-thumbs-up icon"></i> 2 Likes</a> <a href="#"
-                                                                                         class="btn btn-xs btn-default"><i
-                                        class="fa fa-comments"></i> 6 Comments</a></span>
+                                <span>{{comment.commentContent}}</span>
+                                <span style="float: right" ng-click="likeComment(post.id, comment)"><span href="#"
+                                                                                                          class="btn btn-xs btn-default"><i
+                                        ng-show="!comment.liked" class="fa fa-thumbs-up icon"></i><i
+                                        ng-show="comment.liked" class="fa fa-thumbs-down icon"></i> {{comment.likesCount}} <span
+                                        ng-show="comment.likesCount != 1">Likes</span><span
+                                        ng-show="comment.likesCount == 1">Like</span></></span>
                             </div>
                         </li>
                     </ul>

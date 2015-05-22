@@ -1,0 +1,19 @@
+<div class="fb-profile">
+    <img align="left" class="fb-image-lg" ng-src="{{currentProfileData.coverImageData || defaultUserCoverPhoto}}"
+         alt="{{currentProfileData.name}}`s cover photo"/>
+    <img align="left" class="fb-image-profile thumbnail"
+         ng-src="{{currentProfileData.profileImageData || defaultUserAvatar}}"
+         alt="{{currentProfileData.name}}`s photo"/>
+
+    <div class="fb-profile-text">
+        <a href="#/user/{{currentProfileData.username}}"><h1>{{currentProfileData.name}}</h1></a>
+    <span ng-if="myUserName != profileOwner">
+        <span class="btn btn-success btnStatus" ng-click="sendRequest()"
+              ng-hide="currentProfileData.hasPendingRequest == true || currentProfileData.isFriend == true"><i class="fa fa-user-plus"></i> Send friend request</span>
+        <span class="btn btn-info btnStatus" ng-click="sendRequest()" ng-show="currentProfileData.isFriend"><i
+                class="fa fa-check"></i> Friend</span>
+        <span class="btn btn-warning btnStatus" ng-click="sendRequest()" ng-show="currentProfileData.hasPendingRequest"><i class="fa fa-dot-circle-o"></i> Pending</span>
+
+    </span>
+    </div>
+</div>

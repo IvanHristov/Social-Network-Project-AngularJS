@@ -1,0 +1,26 @@
+<div class="list-content friendListZoneFull" ng-show="currentProfileData.isFriend">
+    <ul class="list-group">
+        <li href="#" class="list-group-item title">
+            Your friend list <span class="totalFriendCount">{{currentProfileData.allFriends.length}} total</span>
+        </li>
+        <li href="#" class="list-group-item title">
+            <div class="friendSearch">
+                <span>Name filter  <i class="fa fa-filter"></i></span>
+                <input type="text" class="form-control" ng-model="friendSearch" ng-keyup="searchUserByName();"
+                       placeholder="Search friends" name="q">
+            </div>
+        </li>
+        <li ng-repeat="friend in currentProfileData.allFriends | filter: {name: friendSearch}" href="#" class="allFriends">
+            <a href="#/user/{{friend.username}}">
+                <img class="img"
+                     ng-src="{{friend.profileImageData || defaultUserAvatar}}"
+                     alt="{{friend.name}}`s photo">
+            </a>
+        <span class="name">
+            <a href="#/user/{{friend.username}}">
+                <span>{{friend.name}}</span>
+            </a>
+        </span>
+        </li>
+    </ul>
+</div>

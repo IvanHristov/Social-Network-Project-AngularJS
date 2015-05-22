@@ -1,4 +1,9 @@
 /*login-register style*/
+.loading{
+    width: 200px;
+    height: 200px;
+    margin: 100px auto;
+}
 a:hover{
     text-decoration: none;
 }
@@ -138,7 +143,7 @@ a:hover{
     width: 112%;
 }
 .friendRequestsCount{
-    background: #e86464;
+    background: #5bc0de;
     position: absolute;
     top: 0px;
     left: 22px;
@@ -167,6 +172,15 @@ a:hover{
 
 .body{
     margin-top: 60px;
+}
+.commentField{
+    width: 100%;
+}
+.post-footer .form-control .commentInputField{
+    width: 80%;
+}
+.commentSubmitBtn{
+    float: right;
 }
 .panel-white {
     border: 1px solid #dddddd;
@@ -294,6 +308,7 @@ a:hover{
 .friendRequest{
     display: flex;
     flex-direction: row;
+    margin-bottom: 5px;
 }
 .re{
     width: 82px;
@@ -315,8 +330,19 @@ a:hover{
     border: 2px solid #ddd;
     border-radius: 4px;
 }
+.friendListZoneFull{
+    border: 2px solid #ddd;
+    border-radius: 4px;
+}
 .totalFriendCount{
     float: right;
+}
+.friendSearch{
+    text-align: right;
+}
+.friendSearch .form-control{
+    display: inline-block;
+    width: 30%;
 }
 .img{
     width: 110px;
@@ -324,6 +350,7 @@ a:hover{
     margin: 5px;
 }
 .friends{
+    width: 33%;
     display: inline-block;
 }
 @media screen and (max-width: 1200px) {
@@ -356,7 +383,12 @@ a:hover{
     width: 20%;
     height: 227px;
 }
-
+.btnStatus{
+    float: right;
+    position: relative;
+    top: -45px;
+    right: 10px;
+}
 @media (max-width:768px) {
 
     .fb-profile-text > h1 {
@@ -441,10 +473,17 @@ a:hover{
     padding-left: 15px;
     width: 745px;
 }
+.allFriends{
+    width: 49%;
+    margin: 5px;
+    display: inline-block;
+    border: 2px solid #ddd;
+}
 .userbody{
     margin-top: 49px;
 }
 .fb-profile{
     border: 2px solid #ddd;
     margin-bottom: 25px;
+    height: 434px;
 }

@@ -21,6 +21,7 @@ app.controller('mainController', function ($scope, $location, mainData, authenti
             })
     };
 
+
     $scope.showFriendRequests = function () {
         $scope.showRequests = true;
     };
@@ -42,6 +43,108 @@ app.controller('mainController', function ($scope, $location, mainData, authenti
             .error();
     };
 
+    $scope.acceptFriendRequest = function(id){
+        mainData.acceptFriendRequest(id)
+            .success(function(){
+                $scope.friendRequests
+                    .forEach(function(req){
+                        if(req.id === id){
+                            req.processed = true;
+                        }
+                    });
+                userData.getFriends()
+                    .success(function(serverData){
+                        $scope.friends = serverData;
+                    })
+                    .error(function(){
+
+                    });
+            });
+    };
+
+    $scope.rejectFriendRequest = function(id){
+        mainData.rejectFriendRequest(id)
+            .success(function(){
+                $scope.friendRequests
+                    .forEach(function(req){
+                        if(req.id === id){
+                            req.processed = true;
+                        }
+                    });
+            });
+    };
+
+    $scope.sendRequest = function sendRequest(){
+        console.log($scope.currentProfileData);
+        mainData.sentFriendRequest($scope.currentProfileData.username)
+            .success(function(){
+                $scope.currentProfileData.hasPendingRequest = true;
+            });
+    };
+
+    $scope.profileOwner = $routeParams.username;
+    $scope.myUserName = localStorage.username;
+
+    $scope.writePost = function () {
+        var data = {
+            postContent: $scope.post.postContent,
+            username: $scope.currentProfileData.username
+        };
+        postData.writePost(data)
+            .success(function (serverData) {
+                $scope.currentProfileData.posts.push(serverData);
+                $scope.currentProfileData.posts = $scope.currentProfileData.posts.sort(function (a, b) {
+                    return b.id - a.id;
+                });
+            });
+        $scope.post.postContent = '';
+    };
+
+
+    $scope.likePost = function(post){
+        if(!post.liked){
+            postData.likePost(post.id)
+                .success(function(){
+                    post.liked = true;
+                    post.likesCount++;
+                })
+                .error(function(error){
+                    console.log(error);
+                });
+        }else{
+            postData.unlikePost(post.id)
+                .success(function(){
+                    post.liked = false;
+                    post.likesCount--;
+                });
+        }
+    };
+
+    $scope.submitComment = function submitComment(post){
+        postData.addCommentToPost(post.id, post.unsubmitCommentContent)
+            .success(function(serverData){
+                post.unsubmitCommentContent = '';
+                post.comments.push(serverData);
+                post.totalCommentsCount++;
+            });
+    };
+
+    $scope.likeComment = function likeComment(postId, comment){
+        if(!comment.liked){
+            postData.likeComment(postId, comment.id)
+                .success(function(){
+                    comment.liked = true;
+                    comment.likesCount++;
+                });
+        }else{
+            postData.unlikeComment(postId, comment.id)
+                .success(function(){
+                    comment.liked = false;
+                    comment.likesCount--;
+                });
+        }
+    };
+
     mainData.getNewsFeed(10)
         .success(function (serverData) {
             $scope.loadData = serverData;
@@ -51,7 +154,7 @@ app.controller('mainController', function ($scope, $location, mainData, authenti
 
     mainData.getYourFriendsCount()
         .success(function (serverData) {
-            $scope.friendCount = serverData.totalCount;
+            $scope.friendTotal = serverData;
         }).error(function (error) {
             console.log(error)
         });
@@ -66,6 +169,7 @@ app.controller('mainController', function ($scope, $location, mainData, authenti
     authentication.getUserInfo()
         .success(function (data) {
             $scope.userInfo = data;
+            console.log(data)
         }).error(function (error) {
             console.log(error)
         });
@@ -81,25 +185,30 @@ app.controller('mainController', function ($scope, $location, mainData, authenti
         loadCurrentProfileData($routeParams.username);
     }
 
+
     function loadCurrentProfileData(username) {
         $scope.currentProfileData = {};
 
         mainData.getUserDataByUsername(username)
             .success(function (serverData) {
                 $scope.currentProfileData = serverData;
-                console.log(serverData)
+                mainData.getFriendFeed(username, '', 5)
+                    .success(function (serverData) {
+                        $scope.currentProfileData.posts = serverData;
+                        $scope.currentProfileData.posts = $scope.currentProfileData.posts.sort(function (a, b) {
+                            return b.id - a.id;
+                        });
+                    });
                 if (serverData.isFriend) {
                     mainData.getUserFriends(username)
                         .success(function (serverData) {
+                            $scope.currentProfileData.allFriends = serverData
+                        });
+                    mainData.getUserFriendsPageInfo(username)
+                        .success(function (serverData) {
                             $scope.currentProfileData.friends = serverData;
                         });
-                    mainData.getFriendFeed(username, '', 5)
-                        .success(function (serverData) {
-                            $scope.currentProfileData.posts = serverData;
-                            $scope.currentProfileData.posts = $scope.currentProfileData.posts.sort(function (a, b) {
-                                return b.id - a.id;
-                            });
-                        });
+
                 }
             })
             .error(function () {

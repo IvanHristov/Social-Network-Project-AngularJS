@@ -12,7 +12,7 @@
         </div>
         <div id="navbar" class="navbar-collapse collapse headerSearche">
             <form class="navbar-form navbar-left searchField" ng-controller="mainController" role="search">
-                <div class="input-group searchBar" ng-click="showSearchMenu()" ng-mouseleave="hideSearchMenu()">
+                <div class="input-group searchBar" ng-click="showSearchMenu()" click-anywhere-but-here="hideSearchMenu()">
                     <input type="text" class="form-control" ng-model="search" ng-keyup="searchUserByName();"
                            placeholder="Search friends" name="q">
 
@@ -51,8 +51,8 @@
                                                   alt="{{userInfo.name}}`s photo">
                     {{userInfo.name}}</a></li>
                 <li class="active"><a href="#/home"><i class="fa fa-home fa-lg"></i></a></li>
-                <li ng-click="showFriendRequests()" ng-mouseleave="hideFriendRequests()"><a href="#/"><i
-                        class="fa fa-user fa-lg"></i><span ng-show="friendRequests.length" class="friendRequestsCount">{{friendRequests.length}}</span></a>
+                <li ng-click="showFriendRequests()" click-anywhere-but-here="hideFriendRequests()"><a href="#"><i
+                        class="fa fa-user fa-lg"></i><span ng-show="(friendRequests|filter:{processed: 'undefined'}).length" class="friendRequestsCount">{{friendRequests.length}}</span></a>
 
                     <div ng-show="friendRequests.length && showRequests" class="headerFriendRequest">
                         <div class="upArrow"></div>
@@ -62,20 +62,20 @@
                                     Friend requests
                                 </li>
                                 <li href="#" class="list-group-item text-left">
-                                    <div class="friendRequest" ng-repeat="request in friendRequests">
+                                    <div class="friendRequest" ng-hide="request.processed" ng-repeat="request in friendRequests">
                                         <img class="img-thumbnail"
                                              ng-src="{{request.user.profileImageData || defaultUserAvatar}}"
                                              alt="{{request.user.name}}`s photo">
 
                                         <div>
                                             <div class="name">
-                                                <a href="#/">{{request.user.name}}</a>
+                                                <a href="#/user/request.user.username">{{request.user.name}}</a>
                                             </div>
                                             <div class="acceptRejectBtn">
-                                                <a href="#" class="re btn btn-success"><i class="fa fa-check"></i>
-                                                    Accept</a>
-                                                <a href="#" class="re btn btn-danger"><i class="fa fa-minus-circle"></i>
-                                                    Reject</a>
+                                                <span class="re btn btn-success" ng-click="acceptFriendRequest(request.id)"><i class="fa fa-check"></i>
+                                                    Accept</span>
+                                                <span class="re btn btn-danger" ng-click="rejectFriendRequest(request.id)"><i class="fa fa-minus-circle"></i>
+                                                    Reject</span>
                                             </div>
                                         </div>
                                     </div>

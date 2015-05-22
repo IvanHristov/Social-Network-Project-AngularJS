@@ -8,16 +8,19 @@ app.factory('mainData', function adsData($http, authentication, BASE_URL_SERVICE
             });
     };
 
-    data.getYourFriendsCount = function () {
-        return $http.get(BASE_URL_SERVICE + 'me/friends/preview',
-            {
-                headers: authentication.getHeaders()
-            })
-    };
 
     data.searchUsersByName = function searchFriends(userName){
         return $http.get(
             BASE_URL_SERVICE + 'users/search?searchTerm=' + userName,
+            {
+                headers: authentication.getHeaders()
+            }
+        );
+    };
+
+    data.getUserFriendsPageInfo  = function getUserFriends(username){
+        return $http.get(
+            BASE_URL_SERVICE + 'users/' + username + '/friends/preview',
             {
                 headers: authentication.getHeaders()
             }
@@ -35,7 +38,7 @@ app.factory('mainData', function adsData($http, authentication, BASE_URL_SERVICE
 
     data.getFriendFeed = function getUserFeed(username, startId, pageSize){
         return $http.get(
-            BASE_URL_SERVICE + 'users/' + username + '/wall?StartPostId=' + startId + '&PageSize=' + pageSize,
+            BASE_URL_SERVICE + 'users/' + username + '/wall?PageSize=' + pageSize,
             {
                 headers: authentication.getHeaders()
             }
@@ -58,6 +61,13 @@ app.factory('mainData', function adsData($http, authentication, BASE_URL_SERVICE
             })
     };
 
+    data.getYourFriendsCount = function () {
+        return $http.get(BASE_URL_SERVICE + 'me/friends/preview',
+            {
+                headers: authentication.getHeaders()
+            })
+    };
+
     data.getYourFriendFeed = function (username, StartPostId, PageSize) {
         return $http.get(BASE_URL_SERVICE + 'users/' + username + '/wall?&PageSize=' + PageSize,
             {
@@ -70,6 +80,30 @@ app.factory('mainData', function adsData($http, authentication, BASE_URL_SERVICE
             {
                 headers: authentication.getHeaders()
             });
+    };
+    data.sentFriendRequest = function(username){
+        return $http({
+            method: "POST",
+            url: BASE_URL_SERVICE + 'me/requests/' + username,
+            headers: authentication.getHeaders()
+        })
+
+    };
+
+    data.acceptFriendRequest = function acceptFriendRequest(id){
+        return $http({
+            method: 'PUT',
+            url: BASE_URL_SERVICE + 'me/requests/' + id + '?status=approved',
+            headers: authentication.getHeaders()
+        });
+    };
+
+    data.rejectFriendRequest = function rejectFriendRequest(id){
+        return $http({
+            method: 'PUT',
+            url: BASE_URL_SERVICE + 'me/requests/' + id + '?status=rejected',
+            headers: authentication.getHeaders()
+        });
     };
 
     return data;

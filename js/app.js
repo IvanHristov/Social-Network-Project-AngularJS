@@ -14,6 +14,12 @@ app.config(function ($routeProvider) {
         }).when('/user/:username',{
             templateUrl: 'partial/userWall.html',
             controller: 'mainController'
+        }).when('/user/:username/friends',{
+            templateUrl: 'partial/userFriendWall.html',
+            controller: 'mainController'
+        }).when('/user/:username/myFriends',{
+            templateUrl: 'partial/myFriendWall.html',
+            controller: 'mainController'
         })
 });
 
