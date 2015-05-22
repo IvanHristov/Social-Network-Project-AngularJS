@@ -1,5 +1,7 @@
 /*login-register style*/
-
+a:hover{
+    text-decoration: none;
+}
 .panel-login {
     margin-top: 90px;
     border-color: #ccc;
@@ -121,11 +123,18 @@
     width: 21px;
     height: 18px;
 }
-
+.dropDownSearch{
+    top: 34px;
+    width: 595px;
+    position: absolute;
+    z-index: 99;
+    left: 0;
+}
 .searchField{
     width: 55%;
 }
 .searchBar{
+    position: relative;
     width: 112%;
 }
 .friendRequestsCount{

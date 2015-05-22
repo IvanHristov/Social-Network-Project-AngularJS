@@ -15,6 +15,14 @@ app.factory('mainData', function adsData($http, authentication, BASE_URL_SERVICE
             })
     };
 
+    data.searchUsersByName = function searchFriends(userName){
+        return $http.get(
+            BASE_URL_SERVICE + 'users/search?searchTerm=' + userName,
+            {
+                headers: authentication.getHeaders()
+            }
+        );
+    };
 
     data.getYourFriends = function () {
         return $http.get(BASE_URL_SERVICE + 'me/friends',

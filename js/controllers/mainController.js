@@ -16,6 +16,24 @@ app.controller('mainController', function ($scope, $location, mainData, authenti
       $scope.showRequests = true;
     };
 
+    $scope.showSearchMenu = function(){
+        $scope.shownSearchMenu = true;
+    };
+
+    $scope.hideSearchMenu = function(){
+        $scope.shownSearchMenu = false;
+    };
+
+    $scope.searchUserByName = function(){
+        mainData.searchUsersByName($scope.search)
+            //console.log($scope.search);
+            .success(function(serverData){
+                $scope.foundUsers = serverData;
+
+            })
+            .error();
+    };
+
     mainData.getNewsFeed(10)
         .success(function (serverData) {
             $scope.loadData = serverData;

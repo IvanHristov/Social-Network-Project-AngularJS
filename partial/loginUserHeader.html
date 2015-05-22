@@ -11,18 +11,42 @@
             <a class="navbar-brand" href="#">SocialNetwork</a>
         </div>
         <div id="navbar" class="navbar-collapse collapse headerSearche">
-            <form class="navbar-form navbar-left searchField" role="search">
-                <div class="input-group searchBar">
-                    <input type="text" class="form-control" placeholder="Search" name="q">
+            <form class="navbar-form navbar-left searchField" ng-controller="mainController" role="search">
+                <div class="input-group searchBar" ng-click="showSearchMenu()" ng-mouseleave="hideSearchMenu()">
+                    <input type="text" class="form-control" ng-model="search" ng-keyup="searchUserByName();"
+                           placeholder="Search friends" name="q">
 
                     <div class="input-group-btn">
                         <button class="btn btn-default" type="submit"><i class="fa fa-search"></i></button>
+                    </div>
+                    <div ng-show="shownSearchMenu" class="list-content dropDownSearch">
+                        <ul class="list-group">
+                            <li href="#" ng-repeat="user in foundUsers" class="list-group-item text-left">
+                                <a href="#/user/{{user.username}}">
+                                    <img ng-src="{{user.profileImageData || defaultUserAvatar}}"
+                                         alt="{{user.name}}'s photo"/>
+                                </a>
+                                <label class="name">
+                                    <a href="#/user/{{user.username}}" class="name">
+                                        {{user.name}}
+                                    </a>
+                                </label>
+
+                                <div class="break"></div>
+                            </li>
+                            <li href="#" class="list-group-item text-left">
+                                <a class="btn btn-block btn-info btn-primary">
+                                    <i class="fa fa-filter"></i>
+                                    <span>{{foundUsers.length || 0}}</span> <span>results total</span>
+                                </a>
+                            </li>
+                        </ul>
                     </div>
                 </div>
             </form>
             <ul class="nav navbar-nav navbar-right">
 
-                <li><a href="#/userProfile"> <img class="headerAvatarPhoto"
+                <li><a href="#/user/{{userInfo.username}}"> <img class="headerAvatarPhoto"
                                                   ng-src="{{userInfo.profileImageData || defaultUserAvatar}}"
                                                   alt="{{userInfo.name}}`s photo">
                     {{userInfo.name}}</a></li>
