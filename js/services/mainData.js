@@ -24,6 +24,33 @@ app.factory('mainData', function adsData($http, authentication, BASE_URL_SERVICE
         );
     };
 
+    data.getUserFriends  = function getUserFriends(username){
+        return $http.get(
+            BASE_URL_SERVICE + 'users/' + username + '/friends',
+            {
+                headers: authentication.getHeaders()
+            }
+        );
+    };
+
+    data.getFriendFeed = function getUserFeed(username, startId, pageSize){
+        return $http.get(
+            BASE_URL_SERVICE + 'users/' + username + '/wall?StartPostId=' + startId + '&PageSize=' + pageSize,
+            {
+                headers: authentication.getHeaders()
+            }
+        );
+    };
+
+    data.getUserDataByUsername = function getUserDataByUsername(username){
+        return $http.get(
+            BASE_URL_SERVICE + 'users/' + username,
+            {
+                headers: authentication.getHeaders()
+            }
+        );
+    };
+
     data.getYourFriends = function () {
         return $http.get(BASE_URL_SERVICE + 'me/friends',
             {

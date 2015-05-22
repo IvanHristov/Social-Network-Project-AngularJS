@@ -1,33 +1,41 @@
-app.controller('mainController', function ($scope, $location, mainData, authentication, DEFAULT_USER_AVATAR, notifyService) {
+app.controller('mainController', function ($scope, $location, mainData, authentication, postData, DEFAULT_USER_AVATAR, DEFAULT_USER_COVER_PHOTO, $routeParams, notifyService) {
 
     $scope.defaultUserAvatar = DEFAULT_USER_AVATAR;
-
-    var path = $location.path();
-    if ((path.indexOf("user") != -1) && !authentication.isLoggedIn()) {
-        $location.path('/');
-    }
-
-
-    $scope.hideFriendRequests = function(){
+    $scope.defaultUserCoverPhoto = DEFAULT_USER_COVER_PHOTO;
+    $scope.hideFriendRequests = function () {
         $scope.showRequests = false;
     };
 
-    $scope.showFriendRequests = function(){
-      $scope.showRequests = true;
+    $scope.postStatus = function () {
+        var data = {
+            postContent: $scope.postContent,
+            username: $scope.currentProfileData.username
+        };
+        postData.addNewPost(data)
+            .success(function (serverData) {
+                $scope.currentProfileData.posts.push(serverData);
+                $scope.currentProfileData.posts = $scope.currentProfileData.posts.sort(function (a, b) {
+                    return b.id - a.id;
+                });
+
+            })
     };
 
-    $scope.showSearchMenu = function(){
+    $scope.showFriendRequests = function () {
+        $scope.showRequests = true;
+    };
+
+    $scope.showSearchMenu = function () {
         $scope.shownSearchMenu = true;
     };
 
-    $scope.hideSearchMenu = function(){
+    $scope.hideSearchMenu = function () {
         $scope.shownSearchMenu = false;
     };
 
-    $scope.searchUserByName = function(){
+    $scope.searchUserByName = function () {
         mainData.searchUsersByName($scope.search)
-            //console.log($scope.search);
-            .success(function(serverData){
+            .success(function (serverData) {
                 $scope.foundUsers = serverData;
 
             })
@@ -37,13 +45,12 @@ app.controller('mainController', function ($scope, $location, mainData, authenti
     mainData.getNewsFeed(10)
         .success(function (serverData) {
             $scope.loadData = serverData;
-            console.log($scope.loadData)
         }).error(function (error) {
             console.log(error);
         });
 
     mainData.getYourFriendsCount()
-        .success(function(serverData){
+        .success(function (serverData) {
             $scope.friendCount = serverData.totalCount;
         }).error(function (error) {
             console.log(error)
@@ -52,7 +59,6 @@ app.controller('mainController', function ($scope, $location, mainData, authenti
     mainData.getYourFriends()
         .success(function (serverData) {
             $scope.friendInfo = serverData;
-            console.log(serverData)
         }).error(function (error) {
             console.log(error)
         });
@@ -60,15 +66,44 @@ app.controller('mainController', function ($scope, $location, mainData, authenti
     authentication.getUserInfo()
         .success(function (data) {
             $scope.userInfo = data;
-            console.log(data)
         }).error(function (error) {
             console.log(error)
         });
 
     mainData.getFriendRequests()
         .success(function (serverData) {
-            $scope.friendRequests= serverData;
+            $scope.friendRequests = serverData;
         }).error(function (error) {
             console.log(error)
-        })
+        });
+
+    if ($routeParams.username) {
+        loadCurrentProfileData($routeParams.username);
+    }
+
+    function loadCurrentProfileData(username) {
+        $scope.currentProfileData = {};
+
+        mainData.getUserDataByUsername(username)
+            .success(function (serverData) {
+                $scope.currentProfileData = serverData;
+                console.log(serverData)
+                if (serverData.isFriend) {
+                    mainData.getUserFriends(username)
+                        .success(function (serverData) {
+                            $scope.currentProfileData.friends = serverData;
+                        });
+                    mainData.getFriendFeed(username, '', 5)
+                        .success(function (serverData) {
+                            $scope.currentProfileData.posts = serverData;
+                            $scope.currentProfileData.posts = $scope.currentProfileData.posts.sort(function (a, b) {
+                                return b.id - a.id;
+                            });
+                        });
+                }
+            })
+            .error(function () {
+
+            });
+    }
 });

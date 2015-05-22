@@ -8,7 +8,6 @@ app.controller("userController", function ($scope, $location, $route,
     };
 
     $scope.login = function () {
-        console.log('dibel' + $scope.loginData)
         authentication.login($scope.loginData)
             .success(function (serverData) {
                 notifyService.showInfo("Successful Login!");
