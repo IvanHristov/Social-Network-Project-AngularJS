@@ -4,6 +4,9 @@
     height: 200px;
     margin: 100px auto;
 }
+.loadingFriends{
+    margin-top: 90px;
+}
 a:hover{
     text-decoration: none;
 }
@@ -174,7 +177,7 @@ a:hover{
     margin-top: 60px;
 }
 .commentField{
-    width: 100%;
+    width: 101%;
 }
 .post-footer .form-control .commentInputField{
     width: 80%;
@@ -349,6 +352,11 @@ a:hover{
     height: 130px;
     margin: 5px;
 }
+.coverImg{
+    width: 1136px;
+    height: 364px;
+    margin-bottom: 10px;
+}
 .friends{
     width: 33%;
     display: inline-block;
@@ -486,4 +494,27 @@ a:hover{
     border: 2px solid #ddd;
     margin-bottom: 25px;
     height: 434px;
+}
+
+/*edit user profile style*/
+.editCoverPhoto{
+    width: 555px;
+    height: 178px;
+}
+.editProfileImg{
+    width: 227px;
+    height: 227px;
+    margin: 5px;
+}
+.personal-info .radio{
+    display: inline-block;
+    margin-left: 30px;
+    width: 71%
+}
+.personal-info .radio label{
+    margin-left: 3%;
+    margin-right: 18%;
+}
+.changePasword{
+    margin-top: -86px;
 }

@@ -1,4 +1,4 @@
-<nav class="navbar navbar-default navbar-fixed-top">
+<nav ng-controller="userController" class="navbar navbar-default navbar-fixed-top">
     <div class="container">
         <div class="navbar-header">
             <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar"
@@ -58,10 +58,10 @@
                         <div class="upArrow"></div>
                         <div class="list-content">
                             <ul class="list-group">
-                                <li href="#" class="list-group-item title">
+                                <li class="list-group-item title">
                                     Friend requests
                                 </li>
-                                <li href="#" class="list-group-item text-left">
+                                <li class="list-group-item text-left">
                                     <div class="friendRequest" ng-hide="request.processed" ng-repeat="request in friendRequests">
                                         <img class="img-thumbnail"
                                              ng-src="{{request.user.profileImageData || defaultUserAvatar}}"
@@ -84,8 +84,8 @@
                         </div>
                     </div>
                 </li>
-                <li><a href="#"><i class="fa fa-cogs fa-lg"></i></a></li>
-                <li ng-click="logout()"><a href="#/"><i class="fa fa-sign-out fa-lg"></i></a></li>
+                <li><a href="#/profile"><i class="fa fa-cogs fa-lg"></i></a></li>
+                <li><a ng-click="logout()"><i class="fa fa-sign-out fa-lg"></i></a></li>
             </ul>
         </div>
         <!--/.nav-collapse -->

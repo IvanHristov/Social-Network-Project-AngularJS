@@ -46,15 +46,16 @@ app.controller('mainController', function ($scope, $location, mainData, authenti
     $scope.acceptFriendRequest = function(id){
         mainData.acceptFriendRequest(id)
             .success(function(){
+
                 $scope.friendRequests
                     .forEach(function(req){
                         if(req.id === id){
                             req.processed = true;
                         }
                     });
-                userData.getFriends()
+                mainData.getYourFriendsCount()
                     .success(function(serverData){
-                        $scope.friends = serverData;
+                        $scope.friendTotal = serverData;
                     })
                     .error(function(){
 
@@ -192,7 +193,7 @@ app.controller('mainController', function ($scope, $location, mainData, authenti
         mainData.getUserDataByUsername(username)
             .success(function (serverData) {
                 $scope.currentProfileData = serverData;
-                mainData.getFriendFeed(username, '', 5)
+                  mainData.getFriendFeed(username, '', 5)
                     .success(function (serverData) {
                         $scope.currentProfileData.posts = serverData;
                         $scope.currentProfileData.posts = $scope.currentProfileData.posts.sort(function (a, b) {
@@ -212,7 +213,7 @@ app.controller('mainController', function ($scope, $location, mainData, authenti
                 }
             })
             .error(function () {
-
+                $location.path('/');
             });
     }
 });

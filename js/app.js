@@ -20,6 +20,12 @@ app.config(function ($routeProvider) {
         }).when('/user/:username/myFriends',{
             templateUrl: 'partial/myFriendWall.html',
             controller: 'mainController'
+        }).when('/profile',{
+            templateUrl: 'partial/editProfile.html',
+            controller: 'mainController'
+        }).when('/profile/password',{
+            templateUrl: 'partial/changePassword.html',
+            controller: 'mainController'
         })
 });
 

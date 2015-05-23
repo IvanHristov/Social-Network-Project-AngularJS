@@ -1,5 +1,5 @@
-<div class="fb-profile">
-    <img align="left" class="fb-image-lg" ng-src="{{currentProfileData.coverImageData || defaultUserCoverPhoto}}"
+<div class="fb-profile" ng-show="currentProfileData.username !== undefined">
+    <img align="left" class="coverImg" ng-src="{{currentProfileData.coverImageData || defaultUserCoverPhoto}}"
          alt="{{currentProfileData.name}}`s cover photo"/>
     <img align="left" class="fb-image-profile thumbnail"
          ng-src="{{currentProfileData.profileImageData || defaultUserAvatar}}"
