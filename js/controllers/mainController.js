@@ -148,6 +148,7 @@ app.controller('mainController', function ($scope, $location, mainData, authenti
 
     mainData.getNewsFeed(10)
         .success(function (serverData) {
+            console.log(serverData)
             $scope.loadData = serverData;
         }).error(function (error) {
             console.log(error);

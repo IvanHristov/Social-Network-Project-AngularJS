@@ -15,6 +15,14 @@ app.factory('authentication', function adsData($http, BASE_URL_SERVICE) {
         return $http.post(serviceUrl + 'Logout', null);
     };
 
+    service.changePassword = function (changePasswordData) {
+        return $http({
+            method: "PUT",
+            url: BASE_URL_SERVICE + 'me/changepassword',
+            data: changePasswordData,
+            headers: service.getHeaders()
+        })
+    };
     service.getUserInfo = function () {
         return $http.get(BASE_URL_SERVICE + 'me',
             {

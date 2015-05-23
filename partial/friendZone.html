@@ -10,6 +10,8 @@
                        placeholder="Search friends" name="q">
             </div>
         </li>
+
+        <div class="text-center" ng-if="((currentProfileData.allFriends[currentProfileData.allFriends.length - 1].username === undefined))"><img src="img/ajax-loader (1).gif" alt=""/></div>
         <li ng-repeat="friend in currentProfileData.allFriends | filter: {name: friendSearch}" href="#" class="allFriends">
             <a href="#/user/{{friend.username}}">
                 <img class="img"

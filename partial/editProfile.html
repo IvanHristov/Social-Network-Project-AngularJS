@@ -1,5 +1,5 @@
-<div ng-include="'partial/loginUserHeader.html'"></div>
-<div class="container body">
+<div ng-show="userInfo" ng-include="'partial/loginUserHeader.html'"></div>
+<div ng-show="userInfo" class="container body">
 
     <h1 class="text-right">Edit Profile</h1>
     <hr>
@@ -73,3 +73,4 @@
 
     </div>
 </div>
+<div class="loading"ng-if="(userInfo === undefined)"><img src="img/ajax-loader (1).gif" alt=""/></div>

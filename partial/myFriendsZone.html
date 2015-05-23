@@ -1,7 +1,7 @@
-<div class="list-content friendListZoneFull">
+<div class="list-content friendListZoneFull" ng-show="currentProfileData.username">
     <ul class="list-group">
         <li href="#" class="list-group-item title">
-            Friends <span class="totalFriendCount" href="#/friends">{{friendCount}} total</span>
+            Friends <span class="totalFriendCount" href="#/friends">{{friendTotal.totalCount}} total</span>
         </li>
         <li href="#" class="list-group-item title">
             <div class="friendSearch">
@@ -10,6 +10,9 @@
                        placeholder="Search friends" name="q">
             </div>
         </li>
+
+        <div class="text-center" ng-if="((friendInfo[friendInfo.length - 1].username === undefined) && (userInfo.username !== undefined))"><img src="img/ajax-loader (1).gif" alt=""/></div>
+
         <li ng-repeat="friend in friendInfo | filter: {name: friendSearch}" href="#" class="allFriends">
             <a href="#/user/{{friend.username}}">
                 <img class="img"

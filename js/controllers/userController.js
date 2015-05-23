@@ -35,24 +35,23 @@ app.controller("userController", function ($scope, $location, $route,
         $scope.isLoggedIn = isLogged;
     });
 
-    //
-    //$scope.changePassword = function () {
-    //    authentication.ChangePassword($scope.passwordData,
-    //        function () {
-    //            notifyService.showInfo("Successful Password Change!");
-    //            ClearData();
-    //            $location.path('/user/home');
-    //        },
-    //        function (serverError) {
-    //            notifyService.showError("Unsuccessful Password Change!", serverError)
-    //        });
-    //};
+
+    $scope.changePassword = function () {
+        authentication.changePassword($scope.passwordData)
+            .success(function () {
+                notifyService.showInfo("Successful Password Change!");
+                ClearData();
+                $location.path('/');
+            }).error(function (serverError) {
+                notifyService.showError("Unsuccessful Password Change!", serverError)
+            })
+    };
 
     $scope.logout = function () {
         notifyService.showInfo("Successful Logout!");
         ClearData();
         authentication.clearCredentials();
-        $route.reload();
+        $location.path('/')
     };
     //
     //$scope.showLogin = function() {

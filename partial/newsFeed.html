@@ -1,13 +1,15 @@
 <div ng-controller="mainController">
-    <div ng-include="'partial/loginUserHeader.html'"></div>
+    <div ng-show="userInfo" ng-include="'partial/loginUserHeader.html'"></div>
 
     <div class="container body">
-        <div class="list-content friendListZone">
+        <div ng-show="userInfo" class="list-content friendListZone">
             <ul class="list-group">
                 <li href="#" class="list-group-item title">
                     Friends <a class="totalFriendCount" href="#/user/{{userInfo.username}}/myFriends">{{friendTotal.totalCount}}
                     total</a>
                 </li>
+                <div class="text-center loadingFriends"ng-if="(friendTotal.totalCount === undefined)"><img src="img/ajax-loader (1).gif" alt=""/></div>
+
                 <li ng-repeat="friend in friendTotal.friends" href="#" class="friends">
                     <a href="#/user/{{friend.username}}">
                         <img class="img"
@@ -22,8 +24,8 @@
                 <div class="post-heading">
                     <div class="pull-left image">
                         <img class="img-circle avatar"
-                             ng-src="{{post.profileImageData || defaultUserAvatar}}"
-                             alt="{{post.name}}`s photo">
+                             ng-src="{{post.author.profileImageData || defaultUserAvatar}}"
+                             alt="{{post.author.name}}`s photo">
                     </div>
                     <div class="pull-left meta">
                         <div class="title h5">
