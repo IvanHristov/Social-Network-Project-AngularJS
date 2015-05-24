@@ -9,8 +9,6 @@ app.config(function ($routeProvider) {
         .when('/', {
             templateUrl: 'partial/homeScreen.html',
             controller: 'userController'
-        }).when('/home', {
-            redirectTo: '/'
         }).when('/user/:username',{
             templateUrl: 'partial/userWall.html',
             controller: 'mainController'
@@ -26,6 +24,8 @@ app.config(function ($routeProvider) {
         }).when('/profile/password',{
             templateUrl: 'partial/changePassword.html',
             controller: 'mainController'
+        }).otherwise({
+            redirectTo: '/'
         })
 });
 app.run(function($rootScope, $location, authentication) {

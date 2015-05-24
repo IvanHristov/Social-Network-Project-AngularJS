@@ -50,11 +50,25 @@ app.controller("userController", function ($scope, $location, $route,
         var data = {
             name: $scope.userInfo.name,
             email: $scope.userInfo.email,
-            profileImageData: $scope.userInfo.profileImageData,
-            coverImageData: $scope.userInfo.coverImageData,
             gender: $scope.userInfo.gender
         };
-
+        if($scope.userInfo.currentCoverImg && $scope.userInfo.currentCoverImg.size > 1024000 ){
+            notifyService.showError("Max Cover Image Size Is 1024kb!")
+        }
+        if($scope.userInfo.currentAvatarImg && $scope.userInfo.currentAvatarImg.size > 128000){
+            notifyService.showError("Max Cover Image Size Is 128kb!")
+        }
+        if($scope.userInfo.currentAvatarImg){
+            data.profileImageData = $scope.userInfo.currentAvatarImg.data;
+        }else{
+            data.profileImageData = $scope.userInfo.profileImageData
+        }
+        if($scope.userInfo.currentCoverImg){
+            data.coverImageData = $scope.userInfo.currentCoverImg.data;
+        }else{
+            data.coverImageData = $scope.userInfo.coverImageData
+        }
+        console.log(data);
         authentication.editProfile(data)
             .success(function () {
                 notifyService.showInfo("Successful Update Profile!");
@@ -68,7 +82,7 @@ app.controller("userController", function ($scope, $location, $route,
     $scope.logout = function () {
         authentication.logout()
             .success(function (serverInfo) {
-                console.log(serverInfo)
+                console.log(serverInfo);
                 notifyService.showInfo("Successful Logout!");
                 ClearData();
                 authentication.clearCredentials();

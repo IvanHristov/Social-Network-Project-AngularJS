@@ -7,11 +7,11 @@
         <!-- left column -->
         <div class="col-md-3">
             <div class="text-center">
-                <img ng-src="{{userInfo.profileImageData || defaultUserPhoto}}" class="editProfileImg" alt="avatar">
+                <img ng-src="{{userInfo.currentAvatarImg.data || (userInfo.profileImageData || defaultUserPhoto)}}" class="editProfileImg" alt="avatar">
                 <h6>Change Profile image</h6>
 
-                <h6 class="">LIMIT: 128lb</h6>
-                <input type="file" class="form-control">
+                <h6 class="">LIMIT: 128kb</h6>
+                <input type="file" fileread="userInfo.currentAvatarImg" class="form-control">
             </div>
         </div>
 
@@ -56,11 +56,11 @@
                 <div class="form-group">
                     <label class="col-lg-3 control-label">Cover Photo:</label>
                     <div class="col-lg-8">
-                        <img  ng-src="{{(currentCoverImg) || (userInfo.coverImageData || defaultUserCoverPhoto)}}" class="editCoverPhoto" alt="avatar">
+                        <img  ng-src="{{(userInfo.currentCoverImg.data) || (userInfo.coverImageData || defaultUserCoverPhoto)}}" class="editCoverPhoto" alt="avatar">
 
 
                         <h6 class="pull-right">LIMIT: 1024kb </h6>
-                        <input type="file" class="col-gl-3 control-label" value="uplode">
+                        <input type="file" fileread="userInfo.currentCoverImg" class="col-gl-3 control-label" value="uplode">
                     </div>
 
                 </div>
