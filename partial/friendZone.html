@@ -1,4 +1,4 @@
-<div class="list-content friendListZoneFull" ng-show="currentProfileData.isFriend">
+<div class="list-content friendListZoneFull" ng-controller="postController" ng-show="currentProfileData.isFriend">
     <ul class="list-group">
         <li href="#" class="list-group-item title">
             Friends <span class="totalFriendCount">{{currentProfileData.allFriends.length}} total</span>

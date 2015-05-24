@@ -1,5 +1,5 @@
 <div ng-if="isLoggedIn === true">
-    <div ng-include="'partial/newsFeed.html'"></div>
+    <div ng-include="'partial/newsFeed.html'" ng-controller="mainController"></div>
 </div>
 <div class="loading "ng-if="isLoggedIn === undefined"><img src="img/ajax-loader (1).gif" alt=""/></div>
 <div class="container" ng-if="isLoggedIn === false">

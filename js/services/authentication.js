@@ -12,7 +12,11 @@ app.factory('authentication', function adsData($http, BASE_URL_SERVICE) {
     };
 
     service.logout = function(){
-        return $http.post(serviceUrl + 'Logout', null);
+        return $http({
+            method: "POST",
+            url: serviceUrl + 'logout',
+            headers: service.getHeaders()
+        })
     };
 
     service.changePassword = function (changePasswordData) {

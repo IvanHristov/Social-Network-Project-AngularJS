@@ -12,9 +12,9 @@ app.controller("userController", function ($scope, $location, $route,
                 notifyService.showInfo("Successful Login!");
                 authentication.setCredentials(serverData);
                 ClearData();
-                $location.path('/home')
+                $route.reload();
             }).error(function (serverError) {
-                notifyService.showError('',serverError)
+                notifyService.showError('Unsuccessful Login!',serverError)
             });
     };
 
@@ -24,9 +24,9 @@ app.controller("userController", function ($scope, $location, $route,
                 notifyService.showInfo("Successful Register!");
                 authentication.setCredentials(serverData);
                 ClearData();
-                $location.path('/home')
+                $route.reload();
             }).error(function (serverError) {
-                notifyService.showError('',serverError)
+                notifyService.showError('Unsuccessful Register!',serverError)
             });
     };
 
@@ -66,10 +66,17 @@ app.controller("userController", function ($scope, $location, $route,
     };
 
     $scope.logout = function () {
-        notifyService.showInfo("Successful Logout!");
-        ClearData();
-        authentication.clearCredentials();
-        $location.path('/home')
+        authentication.logout()
+            .success(function (serverInfo) {
+                console.log(serverInfo)
+                notifyService.showInfo("Successful Logout!");
+                ClearData();
+                authentication.clearCredentials();
+                $location.path('/home')
+            }).error(function (error) {
+                notifyService.showError("Unsuccessful Logout!", error);
+            })
+
     };
     //
     //$scope.showLogin = function() {

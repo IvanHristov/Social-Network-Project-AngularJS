@@ -1,6 +1,6 @@
 <div ng-show="userInfo" ng-include="'partial/loginUserHeader.html'"></div>
 
-<div class="container userbody">
+<div class="container userbody" ng-controller="postController">
 
     <div ng-include="'partial/userProfile.html'"></div>
 
@@ -28,7 +28,9 @@
          ng-show="((currentProfileData.name === userInfo.name && currentProfileData.posts[currentProfileData.posts.length - 1].author.name !== undefined))">
         <div class="status-upload">
             <form ng-submit="writePost()">
-                <textarea ng-model="post.postContent" placeholder="What are you thinking...?"></textarea>
+                <textarea ng-model="post.postContent" placeholder="What are you thinking...?" required
+                          oninvalid="this.setCustomValidity('Post content is require!')"
+                          oninput="setCustomValidity('')"></textarea>
                 <button type="submit" class="btn btn-success green"><i class="fa fa-share"></i> Share</button>
             </form>
         </div>
@@ -38,7 +40,9 @@
          ng-show="(currentProfileData.isFriend && currentProfileData.posts[currentProfileData.posts.length - 1].author.name !== undefined)">
         <div class="status-upload">
             <form ng-submit="writePost()">
-                <textarea ng-model="post.postContent" placeholder="What are you thinking...?"></textarea>
+                <textarea ng-model="post.postContent" placeholder="What are you thinking...?"
+                          required oninvalid="this.setCustomValidity('Post content is require!')"
+                          oninput="setCustomValidity('')"></textarea>
                 <button type="submit" class="btn btn-success green"><i class="fa fa-share"></i> Share</button>
             </form>
         </div>
@@ -53,11 +57,11 @@
         <div class="panel panel-white post panel-shadow">
             <div class="post-heading">
                 <div class="pull-right editDelete">
-                        <span ng-show="post.author.name === userInfo.name">
+                        <span class="pointer" ng-click="post.editing = !post.editing" ng-show="post.author.name === userInfo.name">
                             Edit
                             <i class="fa fa-pencil"></i>
                         </span>
-                        <span ng-show="post.author.name === userInfo.name">
+                        <span class="pointer" ng-click="deletePost(post)" ng-show="post.author.name === userInfo.name">
                             Delite
                             <i class="fa fa-times"></i>
                         </span>
@@ -78,7 +82,14 @@
             </div>
             <div class="post-description">
                 <p>{{post.postContent}}</p>
-
+                <div class="status-upload">
+                    <form ng-submit="editPost(editPostForm, post)" ng-show="post.editing" name="editPostForm">
+                            <textarea ng-model="post.postContent" required
+                                      oninvalid="this.setCustomValidity('Post content is require!')"
+                                      oninput="setCustomValidity('')"></textarea>
+                        <button type="submit" class="btn btn-success green"><i class="fa fa-pencil"></i> Edit</button>
+                    </form>
+                </div>
                 <div class="stats">
                     <span class="btn btn-default stat-item" ng-click="likePost(post)">
                         <i ng-show="!post.liked" class="fa fa-thumbs-up icon"></i><i ng-show="post.liked"
@@ -95,7 +106,7 @@
             <div class="post-footer">
                 <form class="input-group commentField" ng-submit="submitComment(post)">
                     <input class="form-control commentInputField" ng-model="post.unsubmitCommentContent"
-                           placeholder="Add a comment" type="text" style="width: 84.9%">
+                           placeholder="Add a comment" type="text" style="width: 84.6%">
                     <button type="submit" class="btn btn-success green commentSubmitBtn"><i class="fa fa-edit"></i>
                         Comment
                     </button>
@@ -113,21 +124,30 @@
                                         href="#/user/{{comment.author.username}}">{{comment.author.name}}</a>
                                 </h4>
                                 <h5 class="time">{{comment.date | date : 'd MMM yyyy HH:mm:ss'}}</h5>
+
                                 <div class="pull-right editDelete">
-                                    <span ng-show="comment.author.name === userInfo.name">
+                                    <span class="pointer" ng-click="comment.editing = !comment.editing" ng-show="comment.author.name === userInfo.name">
                                         Edit
                                         <i class="fa fa-pencil"></i>
                                     </span>
-                                    <span ng-show="comment.author.name === userInfo.name">
+                                    <span class="pointer" ng-click="deleteComment(post.id, comment)"
+                                          ng-show="comment.author.name === userInfo.name">
                                         Delite
                                         <i class="fa fa-times"></i>
                                     </span>
                                 </div>
                             </div>
                             <span>{{comment.commentContent}}</span>
+                            <form ng-show="comment.editing" name="editCommentForm" class="input-group commentField" ng-submit="editComment(post.id, comment)">
+                                <input class="form-control commentInputField" ng-model="comment.commentContent"
+                                       placeholder="Add a comment" type="text" style="width: 83.4%;">
+                                <button type="submit" class="btn btn-success green commentSubmitBtn"><i class="fa fa-edit"></i>
+                                    Comment
+                                </button>
+                            </form>
                             <div class="comment-footer">
                                 <span ng-click="likeComment(post.id, comment)"><span href="#"
-                                                                                                        class="btn btn-xs btn-default"><i
+                                                                                     class="btn btn-xs btn-default"><i
                                         ng-show="!comment.liked" class="fa fa-thumbs-up icon"></i><i
                                         ng-show="comment.liked" class="fa fa-thumbs-down icon"></i> {{comment.likesCount}} <span
                                         ng-show="comment.likesCount != 1">Likes</span><span
@@ -153,11 +173,11 @@
         <div class="panel panel-white post panel-shadow">
             <div class="post-heading">
                 <div class="pull-right editDelete">
-                        <span ng-show="post.author.name === userInfo.name">
+                        <span class="pointer" ng-click="post.editing = !post.editing" ng-show="post.author.name === userInfo.name">
                             Edit
                             <i class="fa fa-pencil"></i>
                         </span>
-                        <span>
+                        <span class="pointer" ng-click="deletePost(post)">
                             Delite
                             <i class="fa fa-times"></i>
                         </span>
@@ -178,7 +198,14 @@
             </div>
             <div class="post-description">
                 <p>{{post.postContent}}</p>
-
+                <div class="status-upload">
+                    <form ng-submit="editPost(editPostForm, post)" ng-show="post.editing" name="editPostForm">
+                            <textarea ng-model="post.postContent" required
+                                      oninvalid="this.setCustomValidity('Post content is require!')"
+                                      oninput="setCustomValidity('')"></textarea>
+                        <button type="submit" class="btn btn-success green"><i class="fa fa-pencil"></i> Edit</button>
+                    </form>
+                </div>
                 <div class="stats">
                     <span class="btn btn-default stat-item" ng-click="likePost(post)">
                         <i ng-show="!post.liked" class="fa fa-thumbs-up icon"></i><i ng-show="post.liked"
@@ -195,7 +222,7 @@
             <div class="post-footer">
                 <form class="input-group commentField" ng-submit="submitComment(post)">
                     <input class="form-control commentInputField" ng-model="post.unsubmitCommentContent"
-                           placeholder="Add a comment" type="text" style="width: 84.9%">
+                           placeholder="Add a comment" type="text" style="width: 84.6%">
                     <button type="submit" class="btn btn-success green commentSubmitBtn"><i class="fa fa-edit"></i>
                         Comment
                     </button>
@@ -213,18 +240,26 @@
                                         href="#/user/{{comment.author.username}}">{{comment.author.name}}</a>
                                 </h4>
                                 <h5 class="time">{{comment.date | date : 'd MMM yyyy HH:mm:ss'}}</h5>
+
                                 <div class="pull-right editDelete">
-                                    <span ng-show="comment.author.name === userInfo.name">
+                                    <span class="pointer" ng-click="comment.editing = !comment.editing" ng-show="comment.author.name === userInfo.name">
                                         Edit
                                         <i class="fa fa-pencil"></i>
                                     </span>
-                                    <span>
+                                    <span class="pointer" ng-click="deleteComment(post.id, comment)">
                                         Delite
                                         <i class="fa fa-times"></i>
                                     </span>
                                 </div>
                             </div>
                             <span>{{comment.commentContent}}</span>
+                            <form ng-show="comment.editing" name="editCommentForm" class="input-group commentField" ng-submit="editComment(post.id, comment)">
+                                <input class="form-control commentInputField" ng-model="comment.commentContent"
+                                       placeholder="Add a comment" type="text" style="width: 83.4%;">
+                                <button type="submit" class="btn btn-success green commentSubmitBtn"><i class="fa fa-edit"></i>
+                                    Comment
+                                </button>
+                            </form>
                             <div class="comment-footer">
                                 <span ng-click="likeComment(post.id, comment)"><span href="#"
                                                                                      class="btn btn-xs btn-default"><i

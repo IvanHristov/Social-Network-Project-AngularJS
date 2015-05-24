@@ -172,7 +172,19 @@ a:hover{
     margin-left: 268px;
 }
 /*postStyle*/
-
+.pointer{
+    cursor: pointer;
+}
+.commentEdit{
+    margin-top: 10px;
+    width: 83.4%;
+}
+.postComment{
+    width: 84.6%;
+}
+body{
+    word-break: break-all;
+}
 .body{
     margin-top: 60px;
 }
