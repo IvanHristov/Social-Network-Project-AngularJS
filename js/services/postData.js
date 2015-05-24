@@ -104,6 +104,13 @@ app.factory('postData', function adsData($http, authentication, BASE_URL_SERVICE
             headers: authentication.getHeaders()
         });
     };
+    data.getAllComments = function(postId){
+        return $http({
+            url: serviceUrl + postId + '/comments',
+            method: "GET",
+            headers: authentication.getHeaders()
+        });
+    };
 
     return data;
 });

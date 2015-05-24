@@ -31,7 +31,12 @@ app.controller('mainController', function ($scope, $location, mainData, authenti
     $scope.acceptFriendRequest = function (id) {
         mainData.acceptFriendRequest(id)
             .success(function () {
-
+                mainData.getFriendRequests()
+                    .success(function (serverData) {
+                        $scope.friendRequests = serverData;
+                    }).error(function (error) {
+                        console.log(error)
+                    });
                 $scope.friendRequests
                     .forEach(function (req) {
                         if (req.id === id) {
@@ -51,6 +56,13 @@ app.controller('mainController', function ($scope, $location, mainData, authenti
     $scope.rejectFriendRequest = function (id) {
         mainData.rejectFriendRequest(id)
             .success(function () {
+
+                mainData.getFriendRequests()
+                    .success(function (serverData) {
+                        $scope.friendRequests = serverData;
+                    }).error(function (error) {
+                        console.log(error)
+                    });
                 $scope.friendRequests
                     .forEach(function (req) {
                         if (req.id === id) {
@@ -70,7 +82,7 @@ app.controller('mainController', function ($scope, $location, mainData, authenti
 
     $scope.profileOwner = $routeParams.username;
     $scope.myUserName = localStorage.username;
-    
+
     $scope.getNewsFeed = function (startInx, PageSize) {
         mainData.getNewsFeed(startInx, PageSize)
             .success(function (serverData) {

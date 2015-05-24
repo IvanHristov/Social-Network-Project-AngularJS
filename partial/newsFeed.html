@@ -76,7 +76,9 @@
                 <div class="post-footer">
                     <form class="input-group commentField" ng-submit="submitComment(post)">
                         <input class="form-control commentInputField" ng-model="post.unsubmitCommentContent"
-                               placeholder="Add a comment" type="text" style="width: 84.6%">
+                               placeholder="Add a comment" type="text" style="width: 84.6%" required
+                               oninvalid="this.setCustomValidity('Comment content is require!')"
+                               oninput="setCustomValidity('')">
                         <button type="submit" class="btn btn-success green commentSubmitBtn"><i class="fa fa-edit"></i>
                             Comment
                         </button>
@@ -125,7 +127,7 @@
                             </div>
 
                         </li>
-                        <li class="text-left" ng-show="post.totalCommentsCount > 3">
+                        <li class="text-left" ng-click="loadAllComments(post)" ng-show="post.totalCommentsCount > 3 && post.allCommentsShowed !== true">
                             <a class="btn btn-block btn-info">
                                 <i class="fa fa-refresh"></i>
                                 Load all comments...

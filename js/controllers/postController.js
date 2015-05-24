@@ -72,13 +72,12 @@ app.controller('postController', function ($scope, $location, mainData, authenti
                 });
         }
     };
-
     $scope.deletePost = function deletePost(post) {
         postData.deletePost(post.id)
             .success(function () {
                 if ($routeParams.username) {
                     notifyService.showInfo("Successful Delite Post!");
-                    loadCurrentProfileData($routeParams.username);
+                    $route.reload();
                 } else {
                     notifyService.showInfo("Successful Delite Post!");
                     $scope.getNewsFeed('',10);
@@ -98,7 +97,9 @@ app.controller('postController', function ($scope, $location, mainData, authenti
                     notifyService.showInfo("Successful Delite Comment!");
                     $scope.getNewsFeed('',10);
                 }
-            });
+            }).error(function (error) {
+                notifyService.showInfo("Successful Delite Comment!");
+            })
     };
 
     $scope.editComment = function editComment(postId, comment) {
@@ -110,6 +111,14 @@ app.controller('postController', function ($scope, $location, mainData, authenti
             }).error(function (error) {
                 notifyService.showError("Unsuccessful Edit Comment!")
             })
+    };
+    $scope.loadAllComments = function(post){
+        postData.getAllComments(post.id)
+            .success(function(data){
+                post.allCommentsShowed = true;
+                post.comments = data;
+            });
+
     };
 
 });
