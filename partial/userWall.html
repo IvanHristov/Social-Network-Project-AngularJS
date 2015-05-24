@@ -256,7 +256,7 @@
                                         Edit
                                         <i class="fa fa-pencil"></i>
                                     </span>
-                                    <span class="pointer" ng-click="deleteComment(post.id, comment)">
+                                    <span class="pointer" ng-show="comment.author.name === userInfo.name" ng-click="deleteComment(post.id, comment)">
                                         Delete
                                         <i class="fa fa-times"></i>
                                     </span>
