@@ -1,8 +1,8 @@
 app.factory('mainData', function adsData($http, authentication, BASE_URL_SERVICE) {
     var data = {};
 
-    data.getNewsFeed = function (PageSize) {
-        return $http.get(BASE_URL_SERVICE + 'me/feed?PageSize=' + PageSize,
+    data.getNewsFeed = function (startId, pageSize) {
+        return $http.get(BASE_URL_SERVICE + 'me/feed?StartPostId=' + startId + '&PageSize=' + pageSize,
             {
                 headers: authentication.getHeaders()
             });
@@ -38,7 +38,7 @@ app.factory('mainData', function adsData($http, authentication, BASE_URL_SERVICE
 
     data.getFriendFeed = function getUserFeed(username, startId, pageSize){
         return $http.get(
-            BASE_URL_SERVICE + 'users/' + username + '/wall?PageSize=' + pageSize,
+            BASE_URL_SERVICE + 'users/' + username + '/wall?StartPostId=' + startId + '&PageSize=' + pageSize,
             {
                 headers: authentication.getHeaders()
             }

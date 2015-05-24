@@ -48,10 +48,6 @@
         </div>
     </div>
 
-    <div class="text-center"
-         ng-if="(currentProfileData.posts[currentProfileData.posts.length - 1].author.name === undefined) && ((userInfo.username !== undefined))">
-        <img src="img/ajax-loader (1).gif" alt=""/></div>
-
     <!--post if user is custom-->
     <div class="col-sm-8" ng-show="currentProfileData.isFriend" ng-repeat="post in currentProfileData.posts">
         <div class="panel panel-white post panel-shadow">
@@ -62,7 +58,7 @@
                             <i class="fa fa-pencil"></i>
                         </span>
                         <span class="pointer" ng-click="deletePost(post)" ng-show="post.author.name === userInfo.name">
-                            Delite
+                            Delete
                             <i class="fa fa-times"></i>
                         </span>
                 </div>
@@ -104,7 +100,7 @@
                 </div>
             </div>
             <div class="post-footer">
-                <form class="input-group commentField" ng-submit="submitComment(post)">
+                <form class="input-group commentField" ng-show="post.isCommentShow" ng-submit="submitComment(post)">
                     <input class="form-control commentInputField" ng-model="post.unsubmitCommentContent"
                            placeholder="Add a comment" type="text" style="width: 84.6%">
                     <button type="submit" class="btn btn-success green commentSubmitBtn"><i class="fa fa-edit"></i>
@@ -132,7 +128,7 @@
                                     </span>
                                     <span class="pointer" ng-click="deleteComment(post.id, comment)"
                                           ng-show="comment.author.name === userInfo.name">
-                                        Delite
+                                        Delete
                                         <i class="fa fa-times"></i>
                                     </span>
                                 </div>
@@ -157,7 +153,7 @@
                         </div>
                     </li>
                     <li class="text-left" ng-show="post.totalCommentsCount > 3">
-                        <a class="btn btn-block btn-primary">
+                        <a class="btn btn-block btn-info">
                             <i class="fa fa-refresh"></i>
                             Load all comments...
                         </a>
@@ -167,7 +163,17 @@
             </div>
         </div>
     </div>
+
+
+
+
+
     <!--post if user is me-->
+
+
+
+
+
     <div class="col-sm-10 col-md-offset-1" ng-show="!currentProfileData.isFriend"
          ng-repeat="post in currentProfileData.posts">
         <div class="panel panel-white post panel-shadow">
@@ -178,7 +184,7 @@
                             <i class="fa fa-pencil"></i>
                         </span>
                         <span class="pointer" ng-click="deletePost(post)">
-                            Delite
+                            Delete
                             <i class="fa fa-times"></i>
                         </span>
                 </div>
@@ -220,7 +226,7 @@
                 </div>
             </div>
             <div class="post-footer">
-                <form class="input-group commentField" ng-submit="submitComment(post)">
+                <form class="input-group commentField"  ng-submit="submitComment(post)">
                     <input class="form-control commentInputField" ng-model="post.unsubmitCommentContent"
                            placeholder="Add a comment" type="text" style="width: 84.6%">
                     <button type="submit" class="btn btn-success green commentSubmitBtn"><i class="fa fa-edit"></i>
@@ -247,7 +253,7 @@
                                         <i class="fa fa-pencil"></i>
                                     </span>
                                     <span class="pointer" ng-click="deleteComment(post.id, comment)">
-                                        Delite
+                                        Delete
                                         <i class="fa fa-times"></i>
                                     </span>
                                 </div>
@@ -272,7 +278,7 @@
                         </div>
                     </li>
                     <li class="text-left" ng-show="post.totalCommentsCount > 3">
-                        <a class="btn btn-block btn-primary">
+                        <a class="btn btn-block btn-info">
                             <i class="fa fa-refresh"></i>
                             Load all comments...
                         </a>
@@ -283,5 +289,8 @@
         </div>
     </div>
 
+
+    <div class="loading text-center">
+        <img src="img/ajax-loader (1).gif" alt=""/></div>
 </div>
-<div class="loading" ng-if="(userInfo.username === undefined)"><img src="img/ajax-loader (1).gif" alt=""/></div>
+<!--<div class="loading" ng-if="(userInfo.username === undefined) && (currentProfileData.usernama === undefined)"><img src="img/ajax-loader (1).gif" alt=""/></div>-->

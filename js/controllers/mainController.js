@@ -7,7 +7,6 @@ app.controller('mainController', function ($scope, $location, mainData, authenti
     };
 
 
-
     $scope.showFriendRequests = function () {
         $scope.showRequests = true;
     };
@@ -29,42 +28,42 @@ app.controller('mainController', function ($scope, $location, mainData, authenti
             .error();
     };
 
-    $scope.acceptFriendRequest = function(id){
+    $scope.acceptFriendRequest = function (id) {
         mainData.acceptFriendRequest(id)
-            .success(function(){
+            .success(function () {
 
                 $scope.friendRequests
-                    .forEach(function(req){
-                        if(req.id === id){
+                    .forEach(function (req) {
+                        if (req.id === id) {
                             req.processed = true;
                         }
                     });
                 mainData.getYourFriendsCount()
-                    .success(function(serverData){
+                    .success(function (serverData) {
                         $scope.friendTotal = serverData;
                     })
-                    .error(function(){
+                    .error(function () {
 
                     });
             });
     };
 
-    $scope.rejectFriendRequest = function(id){
+    $scope.rejectFriendRequest = function (id) {
         mainData.rejectFriendRequest(id)
-            .success(function(){
+            .success(function () {
                 $scope.friendRequests
-                    .forEach(function(req){
-                        if(req.id === id){
+                    .forEach(function (req) {
+                        if (req.id === id) {
                             req.processed = true;
                         }
                     });
             });
     };
 
-    $scope.sendRequest = function sendRequest(){
+    $scope.sendRequest = function sendRequest() {
         console.log($scope.currentProfileData);
         mainData.sentFriendRequest($scope.currentProfileData.username)
-            .success(function(){
+            .success(function () {
                 $scope.currentProfileData.hasPendingRequest = true;
             });
     };
@@ -88,114 +87,114 @@ app.controller('mainController', function ($scope, $location, mainData, authenti
     //};
 
     //$scope.writePost = function () {
-        //    var data = {
-        //        postContent: $scope.post.postContent,
-        //        username: $scope.currentProfileData.username
-        //    };
-        //    postData.writePost(data)
-        //        .success(function (serverData) {
-        //            $scope.currentProfileData.posts.push(serverData);
-        //            $scope.currentProfileData.posts = $scope.currentProfileData.posts.sort(function (a, b) {
-        //                return b.id - a.id;
-        //            });
-        //        });
-        //    $scope.post.postContent = '';
-        //};
-        //
-        //
-        //$scope.likePost = function(post){
-        //    if(!post.liked){
-        //        postData.likePost(post.id)
-        //            .success(function(){
-        //                post.liked = true;
-        //                post.likesCount++;
-        //            })
-        //            .error(function(error){
-        //                console.log(error);
-        //            });
-        //    }else{
-        //        postData.unlikePost(post.id)
-        //            .success(function(){
-        //                post.liked = false;
-        //                post.likesCount--;
-        //            });
-        //    }
-        //};
-        //
-        //$scope.submitComment = function submitComment(post){
-        //    postData.addCommentToPost(post.id, post.unsubmitCommentContent)
-        //        .success(function(serverData){
-        //            post.unsubmitCommentContent = '';
-        //            post.comments.push(serverData);
-        //            post.totalCommentsCount++;
-        //        });
-        //};
-        //
-        //$scope.likeComment = function likeComment(postId, comment){
-        //    if(!comment.liked){
-        //        postData.likeComment(postId, comment.id)
-        //            .success(function(){
-        //                comment.liked = true;
-        //                comment.likesCount++;
-        //            });
-        //    }else{
-        //        postData.unlikeComment(postId, comment.id)
-        //            .success(function(){
-        //                comment.liked = false;
-        //                comment.likesCount--;
-        //            });
-        //    }
-        //};
-        //
-        //$scope.editPost = function editPost(form, post){
-        //
-        //    if(form.$dirty){
-        //        postData.editPost(post)
-        //            .success(function(){
-        //                notifyService.showInfo("Successful Edit Post!");
-        //                post.editing = false;
-        //            }).error(function(error){
-        //
-        //            });
-        //    }
-        //};
-        //
-        //$scope.deletePost = function deletePost(post){
-        //    postData.deletePost(post.id)
-        //        .success(function(){
-        //            if($routeParams.username){
-        //                notifyService.showInfo("Successful Delite Post!");
-        //                loadCurrentProfileData($routeParams.username);
-        //            }else{
-        //                notifyService.showInfo("Successful Delite Post!");
-        //                $scope.getNewsFeed();
-        //            }
-        //        }).error(function (error) {
-        //            notifyService.showError('Unsuccessful Delite Post!',error);
-        //        })
-        //};
-        //
-        //$scope.deleteComment = function deleteComment(postId, comment){
-        //    postData.deleteComment(postId, comment.id)
-        //        .success(function(){
-        //            if($routeParams.username){
-        //                notifyService.showInfo("Successful Delite Comment!");
-        //                loadCurrentProfileData($routeParams.username);
-        //            }else{
-        //                notifyService.showInfo("Successful Delite Comment!");
-        //                $scope.getNewsFeed();
-        //            }
-        //        });
-        //};
-        //
-        //$scope.editComment = function editComment(postId, comment){
-        //    postData.editComment(postId, comment)
-        //        .success(function(){
-        //            comment.editing = false;
-        //        });
-        //};
-    $scope.getNewsFeed = function () {
-        mainData.getNewsFeed(10)
+    //    var data = {
+    //        postContent: $scope.post.postContent,
+    //        username: $scope.currentProfileData.username
+    //    };
+    //    postData.writePost(data)
+    //        .success(function (serverData) {
+    //            $scope.currentProfileData.posts.push(serverData);
+    //            $scope.currentProfileData.posts = $scope.currentProfileData.posts.sort(function (a, b) {
+    //                return b.id - a.id;
+    //            });
+    //        });
+    //    $scope.post.postContent = '';
+    //};
+    //
+    //
+    //$scope.likePost = function(post){
+    //    if(!post.liked){
+    //        postData.likePost(post.id)
+    //            .success(function(){
+    //                post.liked = true;
+    //                post.likesCount++;
+    //            })
+    //            .error(function(error){
+    //                console.log(error);
+    //            });
+    //    }else{
+    //        postData.unlikePost(post.id)
+    //            .success(function(){
+    //                post.liked = false;
+    //                post.likesCount--;
+    //            });
+    //    }
+    //};
+    //
+    //$scope.submitComment = function submitComment(post){
+    //    postData.addCommentToPost(post.id, post.unsubmitCommentContent)
+    //        .success(function(serverData){
+    //            post.unsubmitCommentContent = '';
+    //            post.comments.push(serverData);
+    //            post.totalCommentsCount++;
+    //        });
+    //};
+    //
+    //$scope.likeComment = function likeComment(postId, comment){
+    //    if(!comment.liked){
+    //        postData.likeComment(postId, comment.id)
+    //            .success(function(){
+    //                comment.liked = true;
+    //                comment.likesCount++;
+    //            });
+    //    }else{
+    //        postData.unlikeComment(postId, comment.id)
+    //            .success(function(){
+    //                comment.liked = false;
+    //                comment.likesCount--;
+    //            });
+    //    }
+    //};
+    //
+    //$scope.editPost = function editPost(form, post){
+    //
+    //    if(form.$dirty){
+    //        postData.editPost(post)
+    //            .success(function(){
+    //                notifyService.showInfo("Successful Edit Post!");
+    //                post.editing = false;
+    //            }).error(function(error){
+    //
+    //            });
+    //    }
+    //};
+    //
+    //$scope.deletePost = function deletePost(post){
+    //    postData.deletePost(post.id)
+    //        .success(function(){
+    //            if($routeParams.username){
+    //                notifyService.showInfo("Successful Delite Post!");
+    //                loadCurrentProfileData($routeParams.username);
+    //            }else{
+    //                notifyService.showInfo("Successful Delite Post!");
+    //                $scope.getNewsFeed();
+    //            }
+    //        }).error(function (error) {
+    //            notifyService.showError('Unsuccessful Delite Post!',error);
+    //        })
+    //};
+    //
+    //$scope.deleteComment = function deleteComment(postId, comment){
+    //    postData.deleteComment(postId, comment.id)
+    //        .success(function(){
+    //            if($routeParams.username){
+    //                notifyService.showInfo("Successful Delite Comment!");
+    //                loadCurrentProfileData($routeParams.username);
+    //            }else{
+    //                notifyService.showInfo("Successful Delite Comment!");
+    //                $scope.getNewsFeed();
+    //            }
+    //        });
+    //};
+    //
+    //$scope.editComment = function editComment(postId, comment){
+    //    postData.editComment(postId, comment)
+    //        .success(function(){
+    //            comment.editing = false;
+    //        });
+    //};
+    $scope.getNewsFeed = function (startInx, PageSize) {
+        mainData.getNewsFeed(startInx, PageSize)
             .success(function (serverData) {
                 $scope.loadData = serverData;
             }).error(function (error) {
@@ -244,9 +243,12 @@ app.controller('mainController', function ($scope, $location, mainData, authenti
         mainData.getUserDataByUsername(username)
             .success(function (serverData) {
                 $scope.currentProfileData = serverData;
-                  mainData.getFriendFeed(username, '', 5)
+                $scope.currentProfileData.posts = [];
+                mainData.getFriendFeed(username, '', 5)
                     .success(function (serverData) {
-                        $scope.currentProfileData.posts = serverData;
+                        serverData.forEach(function (post) {
+                            $scope.currentProfileData.posts.push(post);
+                        });
                         $scope.currentProfileData.posts = $scope.currentProfileData.posts.sort(function (a, b) {
                             return b.id - a.id;
                         });
@@ -267,4 +269,43 @@ app.controller('mainController', function ($scope, $location, mainData, authenti
                 $location.path('/');
             });
     }
+
+    $scope.loadFeed = function () {
+        if ($scope.postLoading) {
+            return;
+        }
+        if (!$routeParams.username) {
+            var lastId = $scope.loadData[$scope.loadData.length - 1].id || '';
+            $scope.postLoading = true;
+            mainData.getNewsFeed(lastId, 5)
+                .success(function (userFeed) {
+                    $scope.postLoading = false;
+                    userFeed.forEach(function (post) {
+                        $scope.loadData.push(post);
+                    });
+                });
+        } else {
+            $scope.postLoading = true;
+            mainData.getFriendFeed($routeParams.username, '', 5)
+                .success(function (serverData) {
+                    serverData.forEach(function (post) {
+                        $scope.currentProfileData.posts.push(post);
+                    });
+                });
+        }
+    };
+
+    $(document).ready(function () {
+        //lastAddedLiveFunc();
+        $(window).scroll(function () {
+
+            var wintop = $(window).scrollTop(), docheight = $(document).height(), winheight = $(window).height();
+            var scrolltrigger = 0.95;
+
+            if ((wintop / (docheight - winheight)) > scrolltrigger) {
+                $scope.loadFeed();
+            }
+        });
+    });
+
 });

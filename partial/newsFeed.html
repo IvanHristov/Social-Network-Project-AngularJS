@@ -1,4 +1,4 @@
-<div ng-controller="postController" ng-init="getNewsFeed()">
+<div ng-controller="postController" ng-init="getNewsFeed('', 10)">
     <div ng-show="userInfo" ng-include="'partial/loginUserHeader.html'"></div>
 
     <div class="container body">
@@ -29,7 +29,7 @@
                             <i class="fa fa-pencil"></i>
                         </span>
                         <span class="pointer" ng-click="deletePost(post)" ng-show="post.author.name === userInfo.name">
-                            Delite
+                            Delete
                             <i class="fa fa-times"></i>
                         </span>
                     </div>
@@ -100,7 +100,7 @@
                                             <i class="fa fa-pencil"></i>
                                         </span>
                                         <span class="pointer" ng-click="deleteComment(post.id, comment)" ng-show="comment.author.name === userInfo.name || post.author.name === userInfo.name">
-                                            Delite
+                                            Delete
                                             <i class="fa fa-times"></i>
                                         </span>
                                     </div>
@@ -126,7 +126,7 @@
 
                         </li>
                         <li class="text-left" ng-show="post.totalCommentsCount > 3">
-                            <a class="btn btn-block btn-primary">
+                            <a class="btn btn-block btn-info">
                                 <i class="fa fa-refresh"></i>
                                 Load all comments...
                             </a>
@@ -135,8 +135,7 @@
                 </div>
             </div>
         </div>
-        <div class="col-sm-8 text-center"
-             ng-if="(userInfo === undefined) || (loadData === undefined) || (loadData[loadData.length - 1].author.name === undefined)">
+        <div class="col-sm-8 text-center">
             <img src="img/ajax-loader (1).gif" alt=""/></div>
     </div>
 
