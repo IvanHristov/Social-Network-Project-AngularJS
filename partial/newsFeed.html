@@ -8,7 +8,8 @@
                     Friends <a class="totalFriendCount" href="#/user/{{userInfo.username}}/myFriends">{{friendTotal.totalCount}}
                     total</a>
                 </li>
-                <div class="text-center loadingFriends"ng-if="(friendTotal.totalCount === undefined)"><img src="img/ajax-loader (1).gif" alt=""/></div>
+                <div class="text-center loadingFriends" ng-if="(friendTotal.totalCount === undefined)"><img
+                        src="img/ajax-loader (1).gif" alt=""/></div>
 
                 <li ng-repeat="friend in friendTotal.friends" href="#" class="friends">
                     <a href="#/user/{{friend.username}}">
@@ -22,6 +23,16 @@
         <div class="col-sm-8" ng-repeat="post in loadData">
             <div class="panel panel-white post panel-shadow">
                 <div class="post-heading">
+                    <div class="pull-right editDelete">
+                        <span ng-show="post.author.name === userInfo.name">
+                            Edit
+                            <i class="fa fa-pencil"></i>
+                        </span>
+                        <span ng-show="post.author.name === userInfo.name">
+                            Delite
+                            <i class="fa fa-times"></i>
+                        </span>
+                    </div>
                     <div class="pull-left image">
                         <img class="img-circle avatar"
                              ng-src="{{post.author.profileImageData || defaultUserAvatar}}"
@@ -41,18 +52,20 @@
 
                     <div class="stats">
                         <span href="#" class="btn btn-default stat-item" ng-click="likePost(post)">
-                            <i ng-show="!post.liked" class="fa fa-thumbs-up icon"></i><i ng-show="post.liked" class="fa fa-thumbs-down icon"></i><span>{{post.likesCount}} <span
+                            <i ng-show="!post.liked" class="fa fa-thumbs-up icon"></i><i ng-show="post.liked"
+                                                                                         class="fa fa-thumbs-down icon"></i><span>{{post.likesCount}} <span
                                 ng-show="post.likesCount != 1">Likes</span><span
                                 ng-show="post.likesCount == 1">Like</span> </span>
                         </span>
-                        <span href="#/" class="btn btn-default stat-item" ng-click="post.isCommentShow = !post.isCommentShow">
-                            <i class="fa fa-comments"></i> <span>{{post.comments.length}} <span
+                        <span href="#/" class="btn btn-default stat-item"
+                              ng-click="post.isCommentShow = !post.isCommentShow">
+                            <i class="fa fa-comments"></i> <span>{{post.totalCommentsCount}} <span
                                 ng-show="post.comments.length != 1">Comments</span><span
                                 ng-show="post.comments.length == 1">Comment</span> </span>
                         </span>
                     </div>
                 </div>
-                <div class="post-footer" ng-if="post.isCommentShow">
+                <div class="post-footer">
                     <form class="input-group commentField" ng-submit="submitComment(post)">
                         <input class="form-control commentInputField" ng-model="post.unsubmitCommentContent"
                                placeholder="Add a comment" type="text" style="width: 84.9%">
@@ -60,7 +73,7 @@
                             Comment
                         </button>
                     </form>
-                    <ul class="comments-list" ng-show="post.comments.length !== 0">
+                    <ul class="comments-list" ng-show="post.isCommentShow">
                         <li class="comment" ng-repeat="comment in post.comments">
                             <a class="pull-left" href="#/user/{{comment.author.username}}">
                                 <img class="avatar" ng-src="{{comment.author.profileImageData || defaultUserAvatar}}"
@@ -72,21 +85,45 @@
                                     <h4 class="user"><a href="#/user/{{comment.author.username}}">{{comment.author.name}}</a>
                                     </h4>
                                     <h5 class="time">{{comment.date | date : 'd MMM yyyy HH:mm:ss'}}</h5>
+
+                                    <div class="pull-right editDelete">
+                                        <span ng-show="comment.author.name === userInfo.name">
+                                            Edit
+                                            <i class="fa fa-pencil"></i>
+                                        </span>
+                                        <span ng-show="comment.author.name === userInfo.name || post.author.name === userInfo.name">
+                                            Delite
+                                            <i class="fa fa-times"></i>
+                                        </span>
+                                    </div>
                                 </div>
                                 <span>{{comment.commentContent}}</span>
-                                <span style="float: right" ng-click="likeComment(post.id, comment)"><span href="#"
-                                                                                                          class="btn btn-xs btn-default"><i
+
+                                <div class="comment-footer">
+                                <span ng-click="likeComment(post.id, comment)"><span href="#"
+                                                                                     class="btn btn-xs btn-default"><i
                                         ng-show="!comment.liked" class="fa fa-thumbs-up icon"></i><i
                                         ng-show="comment.liked" class="fa fa-thumbs-down icon"></i> {{comment.likesCount}} <span
                                         ng-show="comment.likesCount != 1">Likes</span><span
-                                        ng-show="comment.likesCount == 1">Like</span></></span>
+                                        ng-show="comment.likesCount == 1">Like</span></span>
+                                </span>
+                                </div>
                             </div>
+
+                        </li>
+                        <li class="text-left" ng-show="post.totalCommentsCount > 3">
+                            <a class="btn btn-block btn-primary">
+                                <i class="fa fa-refresh"></i>
+                                Load all comments...
+                            </a>
                         </li>
                     </ul>
                 </div>
             </div>
         </div>
-        <div class="col-sm-8 text-center"ng-if="(userInfo === undefined) || (loadData === undefined) || (loadData[loadData.length - 1].author.name === undefined)"><img src="img/ajax-loader (1).gif" alt=""/></div>
+        <div class="col-sm-8 text-center"
+             ng-if="(userInfo === undefined) || (loadData === undefined) || (loadData[loadData.length - 1].author.name === undefined)">
+            <img src="img/ajax-loader (1).gif" alt=""/></div>
     </div>
 
 </div>

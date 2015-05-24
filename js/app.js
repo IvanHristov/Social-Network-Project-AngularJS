@@ -28,4 +28,13 @@ app.config(function ($routeProvider) {
             controller: 'mainController'
         })
 });
+app.run(function($rootScope, $location, authentication) {
+    $rootScope.$on("$locationChangeStart", function (event, next, current) {
+        authentication.isLogged(function(isLogged){
 
+            if(($location.path().indexOf('user') != -1 || $location.path().indexOf('/profile') != -1) && !isLogged){
+                $location.path('/');
+            }
+        });
+    });
+});

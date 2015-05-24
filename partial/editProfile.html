@@ -1,5 +1,5 @@
 <div ng-show="userInfo" ng-include="'partial/loginUserHeader.html'"></div>
-<div ng-show="userInfo" class="container body">
+<div ng-show="userInfo" ng-controller="userController" class="container body">
 
     <h1 class="text-right">Edit Profile</h1>
     <hr>
@@ -7,9 +7,10 @@
         <!-- left column -->
         <div class="col-md-3">
             <div class="text-center">
-                <img src="img/user-3995d1ed5f9b6ea6ef9c7bc9ead47415.jpg" class="editProfileImg" alt="avatar">
+                <img ng-src="{{userInfo.profileImageData || defaultUserPhoto}}" class="editProfileImg" alt="avatar">
                 <h6>Change Profile image</h6>
 
+                <h6 class="">LIMIT: 128lb</h6>
                 <input type="file" class="form-control">
             </div>
         </div>
@@ -17,17 +18,21 @@
         <!-- edit form column -->
         <div class="col-md-9 personal-info">
 
-            <form class="form-horizontal" role="form">
+            <form class="form-horizontal" role="form" ng-submit="editProfile()">
                 <div class="form-group">
                     <label class="col-lg-3 control-label">Name:</label>
                     <div class="col-lg-8">
-                        <input class="form-control" type="text" value="Jane">
+                        <input class="form-control" type="text" ng-model="userInfo.name" required
+                               oninvalid="this.setCustomValidity('Name is required')"
+                               oninput="setCustomValidity('')">
                     </div>
                 </div>
                 <div class="form-group">
                     <label class="col-lg-3 control-label">Email:</label>
                     <div class="col-lg-8">
-                        <input class="form-control" type="text" value="janesemail@gmail.com">
+                        <input class="form-control" type="text" ng-model="userInfo.email" required
+                               oninvalid="this.setCustomValidity('Name is required')"
+                               oninput="setCustomValidity('')">
                     </div>
                 </div>
                 <div class="form-group">
@@ -35,15 +40,15 @@
                     <div class="col-lg-8 radio">
                         <label>
                             <input type="radio" name="gender-radio" tabindex="6"
-                                   ng-model="registerDate.gender" value="1">Male
+                                   ng-model="userInfo.gender" value="1">Male
                         </label>
                         <label>
                             <input type="radio" name="gender-radio" tabindex="7"
-                                   ng-model="registerDate.gender" value="2">Female
+                                   ng-model="userInfo.gender" value="2">Female
                         </label>
                         <label>
                             <input type="radio" name="gender-radio" tabindex="8"
-                                   ng-model="registerDate.gender" value="0">Other
+                                   ng-model="userInfo.gender" value="0">Other
                         </label>
                     </div>
                 </div>
@@ -51,16 +56,17 @@
                 <div class="form-group">
                     <label class="col-lg-3 control-label">Cover Photo:</label>
                     <div class="col-lg-8">
-                        <img src="img/default-cover-image.jpg" class="editCoverPhoto" alt="avatar">
+                        <img  ng-src="{{(currentCoverImg) || (userInfo.coverImageData || defaultUserCoverPhoto)}}" class="editCoverPhoto" alt="avatar">
 
 
-                        <input type="file" class="col-gl-3 control-label text-right" value="uplode">
+                        <h6 class="pull-right">LIMIT: 1024kb </h6>
+                        <input type="file" class="col-gl-3 control-label" value="uplode">
                     </div>
 
                 </div>
                 <div class="form-group text-right">
                     <div class="">
-                        <a href="#/"><input type="button" class="btn btn-success" value="Save Changes"></a>
+                        <input type="submit" class="btn btn-success" value="Save Changes">
                         <span></span>
                         <a href="#/"><input type="reset" class="btn btn-default" value="Cancel"></a>
                     </div>

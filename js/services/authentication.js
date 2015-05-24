@@ -23,6 +23,16 @@ app.factory('authentication', function adsData($http, BASE_URL_SERVICE) {
             headers: service.getHeaders()
         })
     };
+
+    service.editProfile = function (userInfoData) {
+        return $http({
+            method: "PUT",
+            url: BASE_URL_SERVICE + 'me',
+            data: userInfoData,
+            headers: service.getHeaders()
+        })
+    };
+
     service.getUserInfo = function () {
         return $http.get(BASE_URL_SERVICE + 'me',
             {

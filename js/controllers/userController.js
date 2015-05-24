@@ -3,8 +3,7 @@ app.controller("userController", function ($scope, $location, $route,
     var ClearData = function () {
         $scope.loginData = "";
         $scope.registerData = "";
-        //$scope.userData = "";
-        //$scope.passwordData = "";
+        $scope.passwordData = "";
     };
 
     $scope.login = function () {
@@ -47,11 +46,30 @@ app.controller("userController", function ($scope, $location, $route,
             })
     };
 
+    $scope.editProfile = function () {
+        var data = {
+            name: $scope.userInfo.name,
+            email: $scope.userInfo.email,
+            profileImageData: $scope.userInfo.profileImageData,
+            coverImageData: $scope.userInfo.coverImageData,
+            gender: $scope.userInfo.gender
+        };
+
+        authentication.editProfile(data)
+            .success(function () {
+                notifyService.showInfo("Successful Update Profile!");
+                ClearData();
+                $location.path('/');
+            }).error(function (serverError) {
+                notifyService.showError("Unsuccessful Change Your Profile!", serverError)
+            })
+    };
+
     $scope.logout = function () {
         notifyService.showInfo("Successful Logout!");
         ClearData();
         authentication.clearCredentials();
-        $location.path('/')
+        $location.path('/home')
     };
     //
     //$scope.showLogin = function() {

@@ -49,8 +49,8 @@
                 <li><a href="#/user/{{userInfo.username}}"> <img class="headerAvatarPhoto"
                                                   ng-src="{{userInfo.profileImageData || defaultUserAvatar}}"
                                                   alt="{{userInfo.name}}`s photo">
-                    {{userInfo.name}}</a></li>
-                <li class="active"><a href="#/home"><i class="fa fa-home fa-lg"></i></a></li>
+                    <span id="username">{{userInfo.name}}</span></a></li>
+                <li class="active"><a href="#/"><i class="fa fa-home fa-lg"></i></a></li>
                 <li ng-click="showFriendRequests()" click-anywhere-but-here="hideFriendRequests()"><a href="#"><i
                         class="fa fa-user fa-lg"></i><span ng-show="(friendRequests|filter:{processed: 'undefined'}).length" class="friendRequestsCount">{{friendRequests.length}}</span></a>
 
